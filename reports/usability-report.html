@@ -1,0 +1,757 @@
+<title>合拍 PawMatch 易用性測試報告｜從中途訪談到領養者模擬</title>
+<style>
+  :root{
+    --bg:#FBF7F0; --surface:#FFFFFF; --surface2:#F4EEE3; --sunken:#F7F2E9;
+    --ink:#2B2823; --muted:#6E6659; --faint:#938A7B;
+    --accent:#B4501C; --accent-ink:#8F3D12; --accent-soft:#F3E0D2;
+    --line:#E6DECF; --line-strong:#D8CDB8;
+    --good:#4F6B47; --good-soft:#E4EADE; --warn:#9C6B12; --warn-soft:#F5E9CE;
+    --shadow:0 1px 2px rgba(43,40,35,.05),0 8px 24px rgba(43,40,35,.06);
+    --maxw:920px;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#201D19; --surface:#2A2621; --surface2:#322D27; --sunken:#252119;
+      --ink:#F1EBDF; --muted:#B5AA98; --faint:#8B8171;
+      --accent:#E2884A; --accent-ink:#EE9d63; --accent-soft:#3A2E23;
+      --line:#3B352C; --line-strong:#4A4237;
+      --good:#8FB07F; --good-soft:#2C3326; --warn:#D8A24E; --warn-soft:#352C1B;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 28px rgba(0,0,0,.28);
+    }
+  }
+  :root[data-theme="light"]{
+    --bg:#FBF7F0; --surface:#FFFFFF; --surface2:#F4EEE3; --sunken:#F7F2E9;
+    --ink:#2B2823; --muted:#6E6659; --faint:#938A7B;
+    --accent:#B4501C; --accent-ink:#8F3D12; --accent-soft:#F3E0D2;
+    --line:#E6DECF; --line-strong:#D8CDB8;
+    --good:#4F6B47; --good-soft:#E4EADE; --warn:#9C6B12; --warn-soft:#F5E9CE;
+  }
+  :root[data-theme="dark"]{
+    --bg:#201D19; --surface:#2A2621; --surface2:#322D27; --sunken:#252119;
+    --ink:#F1EBDF; --muted:#B5AA98; --faint:#8B8171;
+    --accent:#E2884A; --accent-ink:#EE9D63; --accent-soft:#3A2E23;
+    --line:#3B352C; --line-strong:#4A4237;
+    --good:#8FB07F; --good-soft:#2C3326; --warn:#D8A24E; --warn-soft:#352C1B;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;
+    line-height:1.75;font-size:16px;letter-spacing:.01em;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+  h1,h2,h3,h4{line-height:1.3;text-wrap:balance;font-weight:800}
+  a{color:var(--accent-ink)}
+  .tnum{font-variant-numeric:tabular-nums}
+
+  /* Header */
+  header.masthead{
+    background:
+      radial-gradient(120% 120% at 100% 0%, var(--accent-soft) 0%, transparent 55%),
+      var(--surface);
+    border-bottom:1px solid var(--line);
+  }
+  .masthead .wrap{padding-top:56px;padding-bottom:44px}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:12.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--accent-ink);background:var(--accent-soft);
+    padding:6px 12px;border-radius:999px;
+  }
+  h1{font-size:clamp(28px,5vw,44px);margin:20px 0 10px;letter-spacing:-.01em}
+  .lede{font-size:clamp(16px,2.4vw,19px);color:var(--muted);max-width:60ch;margin:0}
+  .meta{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:24px;font-size:13.5px;color:var(--faint)}
+  .meta b{color:var(--ink);font-weight:700}
+
+  /* Section rhythm */
+  section{padding:52px 0;border-bottom:1px solid var(--line)}
+  .kicker{font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);margin:0 0 6px}
+  h2{font-size:clamp(22px,3.4vw,30px);margin:0 0 8px;letter-spacing:-.01em}
+  h2 .n{color:var(--faint);font-weight:800;margin-right:12px;font-variant-numeric:tabular-nums}
+  .sub{color:var(--muted);max-width:66ch;margin:0 0 28px}
+  h3{font-size:19px;margin:34px 0 12px}
+  h4{font-size:15px;margin:0 0 6px}
+  p{margin:0 0 16px}
+
+  /* Cards & grid */
+  .grid{display:grid;gap:16px}
+  .g2{grid-template-columns:1fr 1fr}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  @media(max-width:720px){.g2,.g3{grid-template-columns:1fr}}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px 22px;box-shadow:var(--shadow)}
+  .card.tint{background:var(--surface2);box-shadow:none}
+  .card h4{color:var(--ink)}
+  .card .role{font-size:12.5px;color:var(--accent-ink);font-weight:700;letter-spacing:.04em}
+
+  /* Quote */
+  .quote{
+    border-left:3px solid var(--accent);background:var(--sunken);
+    padding:14px 18px;border-radius:0 12px 12px 0;margin:14px 0;
+    font-size:14.5px;color:var(--ink)
+  }
+  .quote .who{display:block;margin-top:8px;font-size:12.5px;color:var(--faint);font-weight:600;letter-spacing:.02em}
+  .quote em{font-style:normal;background:var(--accent-soft);color:var(--accent-ink);padding:0 3px;border-radius:4px}
+
+  /* Table */
+  .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);background:var(--surface)}
+  table{border-collapse:collapse;width:100%;min-width:640px;font-size:14px}
+  caption{text-align:left;padding:14px 16px;color:var(--muted);font-size:13px;border-bottom:1px solid var(--line)}
+  th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+  thead th{background:var(--surface2);font-size:12.5px;letter-spacing:.04em;color:var(--muted);font-weight:800;position:sticky;top:0}
+  tbody tr:last-child td{border-bottom:0}
+  td.who{font-weight:700;white-space:nowrap;color:var(--ink)}
+
+  /* Findings list */
+  .finding{display:grid;grid-template-columns:44px 1fr;gap:16px;padding:20px 0;border-top:1px solid var(--line)}
+  .finding:first-of-type{border-top:0}
+  .fnum{font-size:20px;font-weight:800;color:var(--accent);font-variant-numeric:tabular-nums;line-height:1.4}
+  .chain{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .chip{font-size:12.5px;padding:5px 11px;border-radius:8px;border:1px solid var(--line-strong);color:var(--muted);background:var(--surface)}
+  .chip b{color:var(--ink)}
+  .imp{margin-top:10px;font-size:14.5px;color:var(--ink);background:var(--good-soft);border-radius:10px;padding:10px 14px}
+  .imp b{color:var(--good)}
+
+  /* Persona */
+  .persona{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:var(--shadow)}
+  .persona .top{display:flex;gap:14px;align-items:center;padding:18px 20px;background:var(--surface2);border-bottom:1px solid var(--line)}
+  .avatar{width:52px;height:52px;border-radius:50%;flex:0 0 auto;display:grid;place-items:center;font-size:24px;background:var(--accent-soft)}
+  .persona .body{padding:16px 20px}
+  .kv{display:flex;gap:8px;font-size:13.5px;margin:2px 0;color:var(--muted)}
+  .kv b{color:var(--ink);font-weight:700;min-width:5.5em;flex:0 0 auto}
+
+  /* Walkthrough log */
+  .log{list-style:none;margin:14px 0 0;padding:0}
+  .log li{position:relative;padding:0 0 18px 26px;margin:0}
+  .log li::before{content:"";position:absolute;left:6px;top:6px;bottom:-6px;width:2px;background:var(--line-strong)}
+  .log li:last-child::before{display:none}
+  .log li .dot{position:absolute;left:0;top:4px;width:14px;height:14px;border-radius:50%;background:var(--surface);border:2.5px solid var(--accent)}
+  .log li.pos .dot{border-color:var(--good)}
+  .log li.neg .dot{border-color:var(--warn);background:var(--warn-soft)}
+  .log .step{font-size:12.5px;font-weight:700;letter-spacing:.05em;color:var(--faint);text-transform:uppercase}
+  .log .think{margin:2px 0 0;font-size:14.5px}
+  .log .think .say{color:var(--ink)}
+  .emo{display:inline-block;font-size:12px;font-weight:700;padding:2px 8px;border-radius:6px;margin-left:6px;vertical-align:1px}
+  .emo.p{background:var(--good-soft);color:var(--good)}
+  .emo.n{background:var(--warn-soft);color:var(--warn)}
+  .emo.z{background:var(--surface2);color:var(--muted)}
+
+  /* Scorecard */
+  .meter{display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px;margin:6px 0}
+  .bar{height:9px;border-radius:6px;background:var(--surface2);overflow:hidden}
+  .bar>span{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--accent),var(--accent-ink))}
+  .meter .lab{font-size:12.5px;color:var(--muted)}
+  .meter .val{font-size:12.5px;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
+  .scorehead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .total{font-size:13px;font-weight:800;color:var(--accent-ink);background:var(--accent-soft);padding:4px 12px;border-radius:999px;white-space:nowrap;font-variant-numeric:tabular-nums}
+  .rank{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:8px;background:var(--ink);color:var(--bg);font-size:13px;font-weight:800;margin-right:10px;font-variant-numeric:tabular-nums}
+
+  /* Callout */
+  .note{background:var(--sunken);border:1px dashed var(--line-strong);border-radius:12px;padding:16px 18px;font-size:14.5px;color:var(--muted)}
+  .note b{color:var(--ink)}
+  ul.clean{margin:0 0 16px;padding-left:20px}
+  ul.clean li{margin:6px 0}
+  .foot{padding:36px 0 60px;color:var(--faint);font-size:13px}
+  .pill{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:6px;background:var(--surface2);color:var(--muted);letter-spacing:.03em}
+  .toc{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+  .toc a{font-size:13px;text-decoration:none;color:var(--muted);border:1px solid var(--line);padding:6px 12px;border-radius:999px}
+  .toc a:hover{border-color:var(--accent);color:var(--accent-ink)}
+</style>
+
+<header class="masthead">
+  <div class="wrap">
+    <span class="eyebrow">🐾 UX Research · 易用性測試</span>
+    <h1>找貓的人，為什麼在門口就走了？</h1>
+    <p class="lede">四場中途之家深度訪談 → 領養者行為與心理分析 → 以三位領養者模擬走查「合拍 PawMatch」，逐一為對領養率有貢獻的功能評分。</p>
+    <div class="meta">
+      <span><b>受訪者</b> 4 位中途／協會（台中社團管理員、雙北奶貓中途、專職化協會 ×2）</span>
+      <span><b>方法</b> 訪談編碼 · Persona-based 走查 · 功能貢獻度評分</span>
+      <span><b>受測對象</b> 合拍 PawMatch MVP</span>
+    </div>
+    <nav class="toc" aria-label="章節">
+      <a href="#s1">① 訪談整理</a>
+      <a href="#s2">② 領養者心理</a>
+      <a href="#s3">③ 測試方法</a>
+      <a href="#s4">④ 模擬走查</a>
+      <a href="#s5">⑤ 功能評分</a>
+      <a href="#s6">⑥ 結論建議</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ 1 ============ -->
+<section id="s1"><div class="wrap">
+  <p class="kicker">Part 1 · 研究基礎</p>
+  <h2><span class="n">01</span>四場訪談的重點整理</h2>
+  <p class="sub">四位受訪者的規模與型態不同，但對「領養這件事到底卡在哪」的判斷高度收斂。以下依主題把他們的說法對齊，方便看出共識與分歧。</p>
+
+  <div class="tablewrap" role="region" aria-label="訪談重點對照表">
+    <table>
+      <caption>表 1．四位中途受訪者的主題對照（摘自逐字稿）</caption>
+      <thead>
+        <tr>
+          <th>主題</th>
+          <th>A · 台中社團管理員</th>
+          <th>B · 雙北奶貓中途</th>
+          <th>C／D · 專職化協會</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="who">最大困擾</td>
+          <td>審核最花時間；每個中途標準不一，人被重複審</td>
+          <td>「送養是最大的困擾，要找適合的人很難」</td>
+          <td>沒有公權力可督導認養人；協會難穩定運作</td>
+        </tr>
+        <tr>
+          <td class="who">前端流失</td>
+          <td>Google 表單「問題一多，就沒有人填了」</td>
+          <td>「問卷一出去，人就不見了」</td>
+          <td>「越來越多人不喜歡到中途認養，覺得要被檢查很多」</td>
+        </tr>
+        <tr>
+          <td class="who">配對哲學</td>
+          <td>看認養「態度」，不問收入</td>
+          <td>層層關卡、慢慢等有緣人，寧缺勿濫</td>
+          <td>把貓「當成一個人、寫成一個故事」，吸引共鳴者→退養率低</td>
+        </tr>
+        <tr>
+          <td class="who">審核方式</td>
+          <td>改用私訊「聊天」問：年紀／家庭／職業／地區／租或買／房東同意</td>
+          <td>問卷→電訪→約到家跟貓互動→看肢體動作→家訪防護</td>
+          <td>面談 1.5 小時邊玩貓邊聊；看「面對困境如何歸因」的人格特質</td>
+        </tr>
+        <tr>
+          <td class="who">信任機制</td>
+          <td>合約核對身分證；FB 可看首頁判斷人；黑名單</td>
+          <td>認養同意書；門窗防護家訪；不良認養人拒往</td>
+          <td>時報時銷、公開門面、專職人力；把關是為貓</td>
+        </tr>
+        <tr>
+          <td class="who">送養後追蹤</td>
+          <td>一對一要照片，「忘記傳就要追，追久對方也覺得煩」</td>
+          <td>認養人 LINE 群組＋相簿；用「奶媽心情不好」逼曬貓</td>
+          <td>幸福回報系統（自登入、照片公開但匿名）＋系統提醒＋抽獎券</td>
+        </tr>
+        <tr>
+          <td class="who">共同信念</td>
+          <td colspan="3">貓的一生 15–20 年，退養對貓傷害極大 → 寧可慢，也不送給不適合的人；<b>兩隻不拆胎一起送</b>（社會化）。</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>三個反覆出現、幾乎逐字相同的訊號</h3>
+  <div class="grid g3" style="margin-top:8px">
+    <div class="card tint">
+      <h4>問卷＝流失閥門</h4>
+      <div class="quote" style="margin:8px 0 0">大家點進去表單，看到<em>那一堆問題</em>的時候，就不會有人填了。<span class="who">— 受訪者 A</span></div>
+    </div>
+    <div class="card tint">
+      <h4>被檢查＝心理排斥</h4>
+      <div class="quote" style="margin:8px 0 0">越來越多人不喜歡到中途認養，他覺得說<em>要被檢查</em>很多東西。<span class="who">— 受訪者 C</span></div>
+    </div>
+    <div class="card tint">
+      <h4>故事＝低退養配對</h4>
+      <div class="quote" style="margin:8px 0 0">把牠敘述成一個人…會有<em>跟這些文字共鳴</em>的人來認養，退養可能性小很多。<span class="who">— 受訪者 C</span></div>
+    </div>
+  </div>
+
+  <div class="note" style="margin-top:22px">
+    <b>整理結論：</b>領養率的瓶頸不在「貓不夠可愛」或「曝光不夠」（受訪者 D 明說社群擴散已經最有效），而在<b>人願不願意走進審核、以及配對品質好不好</b>。前者決定「有多少人開始」，後者決定「送出去的會不會退回來」。一個好的認養網站要同時鬆開這兩個閥門。
+  </div>
+</div></section>
+
+<!-- ============ 2 ============ -->
+<section id="s2"><div class="wrap">
+  <p class="kicker">Part 2 · 使用者洞察</p>
+  <h2><span class="n">02</span>領養者的行為與心理</h2>
+  <p class="sub">把四份逐字稿裡「認養人如何反應」的片段抽出來編碼，得到八條行為／心理模式。每一條都走「訪談證據 → 心理機制 → 對網站的設計意涵」的推論鏈。</p>
+
+  <div class="finding">
+    <div class="fnum">1</div>
+    <div>
+      <h4>被審查感是第一流失點——自尊防衛，不是懶</h4>
+      <p>問卷一出去人就不見、看到一堆問題就不填。表面像「懶」，但受訪者 C 點破：他們<b>被檢核的過程「很不舒服」</b>。這是自尊與被信任需求受威脅時的防衛反應。</p>
+      <div class="chain">
+        <span class="chip"><b>證據</b> 「問卷一出去人就不見了」</span>
+        <span class="chip"><b>機制</b> 門檻＝守門＝我被當成嫌疑人</span>
+      </div>
+      <p class="imp"><b>設計意涵：</b>絕不能讓首屏出現「審核／資格／條件」框架；把資訊蒐集重寫成「幫你找貓」的利己對話。</p>
+    </div>
+  </div>
+
+  <div class="finding">
+    <div class="fnum">2</div>
+    <div>
+      <h4>共感型認養者最穩定——他在找「一個像自己的靈魂」</h4>
+      <p>受訪者 C／D 刻意把貓寫成「一個人、一個個性」，結果來的人「心裡已經對這個生命有共感」，退養率明顯較低。認養動機的底層是<b>情感投射與同理</b>，不是條件比對。</p>
+      <div class="chain">
+        <span class="chip"><b>證據</b> 「找一個跟自己個性很像的」</span>
+        <span class="chip"><b>機制</b> 先動情 → 承諾更黏</span>
+      </div>
+      <p class="imp"><b>設計意涵：</b>檔案頁必須「個性敘事優先」，品種年齡次之；配對理由要能回扣「你這種人 × 這種貓」。</p>
+    </div>
+  </div>
+
+  <div class="finding">
+    <div class="fnum">3</div>
+    <div>
+      <h4>抗拒回報 ≠ 壞人——是隱私敏感</h4>
+      <p>受訪者 D 特別替認養人講話：抗拒被拉進 LINE 回報群的人「很有可能只是非常在意自己的隱私」，愛媽「預設立場」才是盲點。監控感會把好認養人也一起趕跑。</p>
+      <div class="chain">
+        <span class="chip"><b>證據</b> 「不是每個人都喜歡被拉到群裡回報」</span>
+        <span class="chip"><b>機制</b> 人來催＝被監視</span>
+      </div>
+      <p class="imp"><b>設計意涵：</b>回報要「去人化＋預設私密」：系統中性提醒（像帳單）＋照片預設只給中途看＋曬貓可抽獎。</p>
+    </div>
+  </div>
+
+  <div class="finding">
+    <div class="fnum">4</div>
+    <div>
+      <h4>低摩擦傾向——想一次到位，討厭來回</h4>
+      <p>受訪者 A 觀察到聰明的認養人會「把答案整理成一大篇直接貼給我」。他們不是不願給資訊，是<b>討厭多次來回與不確定感</b>。</p>
+      <div class="chain">
+        <span class="chip"><b>證據</b> 「該問的都整理好，一次貼給我」</span>
+        <span class="chip"><b>機制</b> 認知負荷 × 不確定 = 放棄</span>
+      </div>
+      <p class="imp"><b>設計意涵：</b>一屏一題、可跳過、正向進度；結果頁直接生成「預填自我介紹草稿」，讓一次到位變成預設路徑。</p>
+    </div>
+  </div>
+
+  <div class="finding">
+    <div class="fnum">5</div>
+    <div>
+      <h4>新手焦慮——怕自己「不夠格」而不敢開始</h4>
+      <p>受訪者 D：新手不懂很正常，「人都有菜的時候」，只要心態正確就送。但認養人自己不知道這點，會因為怕做錯、怕被打槍而卻步。</p>
+      <div class="chain">
+        <span class="chip"><b>證據</b> 「不懂很合理，看的是接納度」</span>
+        <span class="chip"><b>機制</b> 冒牌者焦慮 → 不敢踏出第一步</span>
+      </div>
+      <p class="imp"><b>設計意涵：</b>新手支援要正面除罪：「問題不是你的失敗，是每隻貓附贈的關卡」；提供匿名發問，明說「不影響任何紀錄」。</p>
+    </div>
+  </div>
+
+  <div class="finding">
+    <div class="fnum">6</div>
+    <div>
+      <h4>未來不確定性——租屋、房東、結婚生子是真實顧慮</h4>
+      <p>租屋是反覆出現的痛點（房東換人、搬家丟貓）。認養人自己也在猶豫「我扛得起 15 年嗎」。逼問會製造防衛，但完全不提又是風險。</p>
+      <div class="chain">
+        <span class="chip"><b>證據</b> 「房東同意嗎」「未來規劃都算進去了嗎」</span>
+        <span class="chip"><b>機制</b> 逼問→防衛；提醒→被在乎</span>
+      </div>
+      <p class="imp"><b>設計意涵：</b>把房東題寫成「提醒」而非「盤查」：「先確認過房東，之後的旅程會順很多」。</p>
+    </div>
+  </div>
+
+  <div class="finding">
+    <div class="fnum">7</div>
+    <div>
+      <h4>沒有退路＝隱瞞退養——比退養更糟的是失聯</h4>
+      <p>受訪者 A 遇過送出去的貓「直接被丟掉」，因為認養人怕被罵而不敢說。當唯一的選項是被譴責，人就會選擇消失。</p>
+      <div class="chain">
+        <span class="chip"><b>證據</b> 「送出去的貓被丟掉，不知去向」</span>
+        <span class="chip"><b>機制</b> 怕譴責 → 隱瞞 → 貓失蹤</span>
+      </div>
+      <p class="imp"><b>設計意涵：</b>提供「無責退回」明路：「任何原因養不了，貓永遠可以回家，我們不追問」，把最壞情況導回安全。</p>
+    </div>
+  </div>
+
+  <div class="finding">
+    <div class="fnum">8</div>
+    <div>
+      <h4>信任稀缺——這個生態的人先假設你有問題</h4>
+      <p>黑名單、時報時銷、被醫生告上法院、愛媽被妖魔化——整個生態互信極低。認養人也承接了這份戒備，需要平台先給出可驗證的透明訊號。</p>
+      <div class="chain">
+        <span class="chip"><b>證據</b> 「時報時銷」「黑名單反被告」</span>
+        <span class="chip"><b>機制</b> 低信任 → 需要外部憑證</span>
+      </div>
+      <p class="imp"><b>設計意涵：</b>中途實名、健康護照、透明帳本、無責退回，四個信任錨點必須看得見。</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- ============ 3 ============ -->
+<section id="s3"><div class="wrap">
+  <p class="kicker">Part 3 · 方法</p>
+  <h2><span class="n">03</span>測試怎麼做</h2>
+  <p class="sub">用上面八條心理，反推出三位最能壓力測試網站的領養者 persona——各自代表一種主要流失風險。再讓他們走同一組任務腳本，記錄想法、情緒與卡點。</p>
+
+  <div class="grid g3">
+    <div class="persona">
+      <div class="top"><div class="avatar">🧍‍♀️</div><div><h4 style="margin:0">林思妤</h4><span class="role">P1 · 怕被審的新手</span></div></div>
+      <div class="body">
+        <div class="kv"><b>背景</b><span>28 歲，行銷企劃，台北租屋</span></div>
+        <div class="kv"><b>經驗</b><span>第一次養貓</span></div>
+        <div class="kv"><b>風險</b><span>對應洞察 1·5·6：一看到像審核就會關頁</span></div>
+        <div class="kv"><b>心聲</b><span>「我只是想養隻貓，不是來面試的。」</span></div>
+      </div>
+    </div>
+    <div class="persona">
+      <div class="top"><div class="avatar">🧑‍💻</div><div><h4 style="margin:0">陳柏諺</h4><span class="role">P2 · 找共感的獨居者</span></div></div>
+      <div class="body">
+        <div class="kv"><b>背景</b><span>34 歲，工程師，獨居自有</span></div>
+        <div class="kv"><b>經驗</b><span>養過、退過一次，有陰影</span></div>
+        <div class="kv"><b>風險</b><span>對應洞察 2·4：要「對的貓」，不要被推銷</span></div>
+        <div class="kv"><b>心聲</b><span>「上次條件配對，結果我們合不來。」</span></div>
+      </div>
+    </div>
+    <div class="persona">
+      <div class="top"><div class="avatar">🧑</div><div><h4 style="margin:0">黃士豪</h4><span class="role">P3 · 重隱私的抗拒者</span></div></div>
+      <div class="body">
+        <div class="kv"><b>背景</b><span>31 歲，接案設計，與伴侶同住</span></div>
+        <div class="kv"><b>經驗</b><span>養過一隻</span></div>
+        <div class="kv"><b>風險</b><span>對應洞察 3·7：討厭被拉群、被追蹤回報</span></div>
+        <div class="kv"><b>心聲</b><span>「我會好好養，但別盯著我。」</span></div>
+      </div>
+    </div>
+  </div>
+
+  <h3>任務腳本（三人共用）</h3>
+  <ul class="clean">
+    <li><b>T1</b>　落地首頁，判斷「這裡能不能幫到我」（5 秒測試）。</li>
+    <li><b>T2</b>　完成生活樣態配對，看到推薦結果。</li>
+    <li><b>T3</b>　深入一隻貓的檔案，決定要不要進一步。</li>
+    <li><b>T4</b>　聯繫中途 / 送出意向。</li>
+    <li><b>T5</b>　理解「認養之後」會發生什麼（回報、退路、支援）。</li>
+  </ul>
+  <p class="note"><b>情緒標記：</b><span class="emo p">＋ 推進</span> 降低阻力、想繼續　<span class="emo z">○ 中性</span> 沒感覺、沒幫助也沒傷害　<span class="emo n">－ 阻力</span> 猶豫、想退出。走查即為受測網站「合拍 PawMatch」現行 MVP。</p>
+</div></section>
+
+<!-- ============ 4 ============ -->
+<section id="s4"><div class="wrap">
+  <p class="kicker">Part 4 · 模擬走查</p>
+  <h2><span class="n">04</span>三位領養者的實際旅程</h2>
+  <p class="sub">以第一人稱記錄每位 persona 在每個任務當下的想法與情緒。引號內為網站實際微文案。</p>
+
+  <!-- P1 -->
+  <div class="card" style="margin-bottom:22px">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px">
+      <div class="avatar" style="width:40px;height:40px;font-size:20px">🧍‍♀️</div>
+      <h3 style="margin:0">P1　林思妤 · 怕被審的新手</h3>
+    </div>
+    <ul class="log">
+      <li class="pos"><span class="dot"></span><span class="step">T1 首頁 <span class="emo p">＋</span></span>
+        <p class="think"><span class="say">「『找到那隻跟你的生活合拍的貓』——喔，是幫我找，不是叫我先證明自己。主鈕寫『開始配對』不是『申請認養』，我沒有戒心。」</span> 5 秒內判定「這裡站在我這邊」，願意往下。</p></li>
+      <li class="pos"><span class="dot"></span><span class="step">T2 配對測驗 <span class="emo p">＋</span></span>
+        <p class="think"><span class="say">「一次只問一題，還有貓掌進度說『還差 2 題』。問到租屋，它說『先確認過房東，之後的旅程會順很多』——是提醒欸，不是在盤問我。每題都能跳過，我鬆一口氣。」</span> 洞察 1·6 的地雷被拆掉。</p></li>
+      <li class="pos"><span class="dot"></span><span class="step">T3 檔案 <span class="emo p">＋</span></span>
+        <p class="think"><span class="say">「健康護照把疫苗結紮都列好了，還沒打的寫『即將完成』不是紅字警告。需求卡是『我需要窗戶有防護網』，附『怎麼做』跟採買價格——原來門窗防護這麼簡單，我以為很難。」</span> 新手焦慮（洞察 5）下降。</p></li>
+      <li class="neg"><span class="dot"></span><span class="step">T4 聯繫中途 <span class="emo n">－</span></span>
+        <p class="think"><span class="say">「它幫我把測驗答案寫成一段自我介紹草稿，這超貼心。但我第一次養，會不會被中途打槍？」</span> 卡點：草稿送出前缺一句「中途看的是你願不願意學，不是你懂多少」的定心話。<b>（改進點 A）</b></p></li>
+      <li class="pos"><span class="dot"></span><span class="step">T5 認養之後 <span class="emo p">＋</span></span>
+        <p class="think"><span class="say">「看到『無責退回：任何原因養不了，貓永遠可以回家，我們不追問』，我反而更敢養了——有退路，我才敢承諾。」</span> 洞察 7 命中。</p></li>
+    </ul>
+    <p class="note" style="margin-top:14px"><b>P1 結論：</b>五個任務四正一負，唯一阻力在「送出前的自我懷疑」。這是新手轉換率的最後一哩，建議在草稿頁補一句除罪化文案。</p>
+  </div>
+
+  <!-- P2 -->
+  <div class="card" style="margin-bottom:22px">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px">
+      <div class="avatar" style="width:40px;height:40px;font-size:20px">🧑‍💻</div>
+      <h3 style="margin:0">P2　陳柏諺 · 找共感的獨居者</h3>
+    </div>
+    <ul class="log">
+      <li class="pos"><span class="dot"></span><span class="step">T1 首頁 <span class="emo p">＋</span></span>
+        <p class="think"><span class="say">「副鈕『先逛逛貓咪』給了我不想被引導的空間。我先看貓。」</span> 尊重了他被推銷過的戒心（洞察 4）。</p></li>
+      <li class="pos"><span class="dot"></span><span class="step">T3→T2 檔案先行 <span class="emo p">＋</span></span>
+        <p class="think"><span class="say">「阿灰的介紹是第一人稱：『我是慢熟的觀察家，給我一週，我會睡在你的鍵盤上。』——這不是規格表，這是一個像我的傢伙。我是為了這種描述來的。」</span> 共感型（洞察 2）被精準接住。</p></li>
+      <li class="pos"><span class="dot"></span><span class="step">T2 配對理由 <span class="emo p">＋</span></span>
+        <p class="think"><span class="say">「配對結果不是冷冰冰的百分比，理由寫『你說平日在家時間短——阿灰是獨處高手』，它真的用了我的答案。上次那種條件配對從不解釋為什麼。」</span> 洞察 2·4 同時滿足。</p></li>
+      <li class="neg"><span class="dot"></span><span class="step">T3 退養陰影 <span class="emo n">－</span></span>
+        <p class="think"><span class="say">「我上次就是合不來才退養的。這次怎麼知道會不一樣？」</span> 卡點：認養旅程有「試相處」階段，但首頁與結果頁沒把「可以先試、不用一次定終身」講出來，錯過了安撫退養陰影的機會。<b>（改進點 B）</b></p></li>
+      <li class="pos"><span class="dot"></span><span class="step">T5 承諾日 <span class="emo p">＋</span></span>
+        <p class="think"><span class="say">「旅程四階段『相識→見面→試相處→承諾日』——原來有試相處緩衝，我安心多了。最終決定在中途手上，這句『他們的把關是給你和貓的保障』我認同。」</span></p></li>
+    </ul>
+    <p class="note" style="margin-top:14px"><b>P2 結論：</b>個性敘事與可解釋配對是他留下來的主因。唯一阻力是「試相處」這個關鍵安撫點藏太深，建議前移到配對結果頁曝光。</p>
+  </div>
+
+  <!-- P3 -->
+  <div class="card">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px">
+      <div class="avatar" style="width:40px;height:40px;font-size:20px">🧑</div>
+      <h3 style="margin:0">P3　黃士豪 · 重隱私的抗拒者</h3>
+    </div>
+    <ul class="log">
+      <li class="zero"><span class="dot" style="border-color:var(--faint)"></span><span class="step">T1–T2 <span class="emo z">○</span></span>
+        <p class="think"><span class="say">「配對還行，沒叫我登入、沒要我手機號，可以。」</span> 中性通過，沒有觸發防衛。</p></li>
+      <li class="neg"><span class="dot"></span><span class="step">T4 送出草稿 <span class="emo n">－</span></span>
+        <p class="think"><span class="say">「草稿裡自動放了我的生活樣態摘要，要寄給中途。等一下，這些會被存起來嗎？我最怕資料被留底。」</span> 卡點：草稿是「確認後才送出」的好設計，但沒告訴他「摘要只給這位中途、不公開」。隱私敏感者（洞察 3）在此遲疑。<b>（改進點 C）</b></p></li>
+      <li class="pos"><span class="dot"></span><span class="step">T5 曬貓回報 <span class="emo p">＋</span></span>
+        <p class="think"><span class="say">「回報居然預設『只給中途看』，還特別標『發問不會影響任何紀錄』。提醒是系統發的、像日曆通知，不是人來催我。這是我看過第一個沒有監控感的回報設計。」</span> 直接命中洞察 3——這正是受訪者 D 想要的數位工具。</p></li>
+      <li class="pos"><span class="dot"></span><span class="step">T5 抽獎 <span class="emo p">＋</span></span>
+        <p class="think"><span class="say">「曬貓有抽獎券，把『被要求回報』變成『我想曬』。心理上完全不一樣。」</span></p></li>
+    </ul>
+    <p class="note" style="margin-top:14px"><b>P3 結論：</b>回報系統的去人化＋預設私密＋遊戲化，正是他願意留任的關鍵。唯一阻力是「送出摘要」缺一個隱私說明——這對隱私敏感者是成敗一線。</p>
+  </div>
+</div></section>
+
+<!-- ============ 5 ============ -->
+<section id="s5"><div class="wrap">
+  <p class="kicker">Part 5 · 核心產出</p>
+  <h2><span class="n">05</span>功能對「領養率」的貢獻度評分</h2>
+  <p class="sub">把網站現有功能，依五個對領養率有因果關係的維度評分（各 1–5 分，滿分 25）。維度直接來自訪談的兩個閥門：<b>「有多少人開始」</b>與<b>「送出去會不會退回」</b>。</p>
+
+  <div class="grid g2" style="margin-bottom:26px">
+    <div class="card tint">
+      <h4>評分維度（各 5 分）</h4>
+      <ul class="clean" style="margin-bottom:0">
+        <li><b>A 消除被審查感</b>　降低前端心理流失（洞察 1）</li>
+        <li><b>B 促進共感配對</b>　提高配對品質、降退養（洞察 2）</li>
+        <li><b>C 降低操作摩擦</b>　認知負荷、步驟數（洞察 4·5）</li>
+        <li><b>D 建立信任</b>　可驗證的透明訊號（洞察 8）</li>
+        <li><b>E 降低退養／留任</b>　售後與退路（洞察 3·7）</li>
+      </ul>
+    </div>
+    <div class="card tint">
+      <h4>怎麼讀分數</h4>
+      <p style="margin-bottom:8px">分數＝該功能對「提高最終領養率」的估計貢獻，不是它做得多精緻。一個功能可以很漂亮但對領養率貢獻低（如帳本），也可以樸素但關鍵（如無責退回）。</p>
+      <p style="margin-bottom:0" class="pill">總分排序＝優先投資順序的參考</p>
+    </div>
+  </div>
+
+  <!-- Scored features -->
+  <div class="grid" id="scored">
+    <!-- 1 -->
+    <div class="card">
+      <div class="scorehead"><h3 style="margin:0"><span class="rank">1</span>生活樣態配對測驗（一屏一題·可跳過·貓掌進度）</h3><span class="total">23 / 25</span></div>
+      <div class="grid g2" style="margin-top:12px">
+        <div>
+          <div class="meter"><div><div class="lab">A 消除被審查感</div><div class="bar"><span style="width:100%"></span></div></div><span class="val">5</span></div>
+          <div class="meter"><div><div class="lab">B 促進共感配對</div><div class="bar"><span style="width:80%"></span></div></div><span class="val">4</span></div>
+          <div class="meter"><div><div class="lab">C 降低操作摩擦</div><div class="bar"><span style="width:100%"></span></div></div><span class="val">5</span></div>
+        </div>
+        <div>
+          <div class="meter"><div><div class="lab">D 建立信任</div><div class="bar"><span style="width:60%"></span></div></div><span class="val">3</span></div>
+          <div class="meter"><div><div class="lab">E 降低退養／留任</div><div class="bar"><span style="width:100%"></span></div></div><span class="val">5</span></div>
+        </div>
+      </div>
+      <p style="margin:12px 0 0"><b>直接對應訪談最痛的閥門</b>——把「問卷一出去人就不見」的長表單，換成利己框架的對話。三位 persona 全數順利通過，是全站對領養率貢獻最高的單一功能。<span class="pill">待改：無</span></p>
+    </div>
+
+    <!-- 2 -->
+    <div class="card">
+      <div class="scorehead"><h3 style="margin:0"><span class="rank">2</span>個性敘事檔案（第一人稱故事優先）</h3><span class="total">22 / 25</span></div>
+      <div class="grid g2" style="margin-top:12px">
+        <div>
+          <div class="meter"><div><div class="lab">A 消除被審查感</div><div class="bar"><span style="width:80%"></span></div></div><span class="val">4</span></div>
+          <div class="meter"><div><div class="lab">B 促進共感配對</div><div class="bar"><span style="width:100%"></span></div></div><span class="val">5</span></div>
+          <div class="meter"><div><div class="lab">C 降低操作摩擦</div><div class="bar"><span style="width:80%"></span></div></div><span class="val">4</span></div>
+        </div>
+        <div>
+          <div class="meter"><div><div class="lab">D 建立信任</div><div class="bar"><span style="width:80%"></span></div></div><span class="val">4</span></div>
+          <div class="meter"><div><div class="lab">E 降低退養／留任</div><div class="bar"><span style="width:100%"></span></div></div><span class="val">5</span></div>
+        </div>
+      </div>
+      <p style="margin:12px 0 0">受訪者 C 的「把貓寫成一個人」被完整落地。P2 因此留下。<b>直接對應退養率最低的「共感型認養」。</b><span class="pill">待改：改進點 B — 把「試相處」安撫點前移</span></p>
+    </div>
+
+    <!-- 3 -->
+    <div class="card">
+      <div class="scorehead"><h3 style="margin:0"><span class="rank">3</span>曬貓回報系統（中性提醒·預設私密·抽獎）</h3><span class="total">21 / 25</span></div>
+      <div class="grid g2" style="margin-top:12px">
+        <div>
+          <div class="meter"><div><div class="lab">A 消除被審查感</div><div class="bar"><span style="width:100%"></span></div></div><span class="val">5</span></div>
+          <div class="meter"><div><div class="lab">B 促進共感配對</div><div class="bar"><span style="width:40%"></span></div></div><span class="val">2</span></div>
+          <div class="meter"><div><div class="lab">C 降低操作摩擦</div><div class="bar"><span style="width:80%"></span></div></div><span class="val">4</span></div>
+        </div>
+        <div>
+          <div class="meter"><div><div class="lab">D 建立信任</div><div class="bar"><span style="width:100%"></span></div></div><span class="val">5</span></div>
+          <div class="meter"><div><div class="lab">E 降低退養／留任</div><div class="bar"><span style="width:100%"></span></div></div><span class="val">5</span></div>
+        </div>
+      </div>
+      <p style="margin:12px 0 0">幾乎是受訪者 D「想開發卻還沒做出來」的數位工具的成品。P3 從抗拒轉為願意留任。對「留住成功認養、社會證明反哺轉換」貢獻極高。<span class="pill">待改：無（維度 B 本非其職責）</span></p>
+    </div>
+
+    <!-- 4 -->
+    <div class="card">
+      <div class="scorehead"><h3 style="margin:0"><span class="rank">4</span>無責退回通道</h3><span class="total">20 / 25</span></div>
+      <div class="grid g2" style="margin-top:12px">
+        <div>
+          <div class="meter"><div><div class="lab">A 消除被審查感</div><div class="bar"><span style="width:100%"></span></div></div><span class="val">5</span></div>
+          <div class="meter"><div><div class="lab">B 促進共感配對</div><div class="bar"><span style="width:40%"></span></div></div><span class="val">2</span></div>
+          <div class="meter"><div><div class="lab">C 降低操作摩擦</div><div class="bar"><span style="width:80%"></span></div></div><span class="val">4</span></div>
+        </div>
+        <div>
+          <div class="meter"><div><div class="lab">D 建立信任</div><div class="bar"><span style="width:80%"></span></div></div><span class="val">4</span></div>
+          <div class="meter"><div><div class="lab">E 降低退養／留任</div><div class="bar"><span style="width:100%"></span></div></div><span class="val">5</span></div>
+        </div>
+      </div>
+      <p style="margin:12px 0 0">看似售後功能，卻是 P1「有退路才敢承諾」的<b>轉換臨門一腳</b>。同時解掉受訪者 A「怕被罵而隱瞞退養」的最壞情況。樸素但高價值的典範。<span class="pill">待改：入口可再靠近承諾決策點</span></p>
+    </div>
+
+    <!-- 5 -->
+    <div class="card">
+      <div class="scorehead"><h3 style="margin:0"><span class="rank">5</span>跟中途聊聊 · 預填自我介紹草稿</h3><span class="total">19 / 25</span></div>
+      <div class="grid g2" style="margin-top:12px">
+        <div>
+          <div class="meter"><div><div class="lab">A 消除被審查感</div><div class="bar"><span style="width:80%"></span></div></div><span class="val">4</span></div>
+          <div class="meter"><div><div class="lab">B 促進共感配對</div><div class="bar"><span style="width:60%"></span></div></div><span class="val">3</span></div>
+          <div class="meter"><div><div class="lab">C 降低操作摩擦</div><div class="bar"><span style="width:100%"></span></div></div><span class="val">5</span></div>
+        </div>
+        <div>
+          <div class="meter"><div><div class="lab">D 建立信任</div><div class="bar"><span style="width:80%"></span></div></div><span class="val">4</span></div>
+          <div class="meter"><div><div class="lab">E 降低退養／留任</div><div class="bar"><span style="width:60%"></span></div></div><span class="val">3</span></div>
+        </div>
+      </div>
+      <p style="margin:12px 0 0">把「整理成一大篇貼給中途」自動化（洞察 4），還原成「自我介紹」而非「填申請」。但這裡同時卡住 P1（怕被打槍）與 P3（怕留底），是<b>改進點 A＋C 的交會處</b>，投資報酬率最高的一次微調。<span class="pill">待改：補除罪話術＋隱私說明</span></p>
+    </div>
+
+    <!-- 6 -->
+    <div class="card">
+      <div class="scorehead"><h3 style="margin:0"><span class="rank">6</span>認養旅程四階段（含「最終決定在中途」正面解釋）</h3><span class="total">18 / 25</span></div>
+      <div class="grid g2" style="margin-top:12px">
+        <div>
+          <div class="meter"><div><div class="lab">A 消除被審查感</div><div class="bar"><span style="width:80%"></span></div></div><span class="val">4</span></div>
+          <div class="meter"><div><div class="lab">B 促進共感配對</div><div class="bar"><span style="width:60%"></span></div></div><span class="val">3</span></div>
+          <div class="meter"><div><div class="lab">C 降低操作摩擦</div><div class="bar"><span style="width:60%"></span></div></div><span class="val">3</span></div>
+        </div>
+        <div>
+          <div class="meter"><div><div class="lab">D 建立信任</div><div class="bar"><span style="width:80%"></span></div></div><span class="val">4</span></div>
+          <div class="meter"><div><div class="lab">E 降低退養／留任</div><div class="bar"><span style="width:80%"></span></div></div><span class="val">4</span></div>
+        </div>
+      </div>
+      <p style="margin:12px 0 0">「試相處」階段是 P2 退養陰影的解藥，把中途的把關權從「守門」重框為「保障」。可惜位置偏後，安撫來得太晚。<span class="pill">待改：改進點 B — 前移曝光</span></p>
+    </div>
+
+    <!-- 7 -->
+    <div class="card">
+      <div class="scorehead"><h3 style="margin:0"><span class="rank">7</span>健康護照時間軸　＆　「這隻貓的需求」卡</h3><span class="total">17 / 25</span></div>
+      <div class="grid g2" style="margin-top:12px">
+        <div>
+          <div class="meter"><div><div class="lab">A 消除被審查感</div><div class="bar"><span style="width:60%"></span></div></div><span class="val">3</span></div>
+          <div class="meter"><div><div class="lab">B 促進共感配對</div><div class="bar"><span style="width:40%"></span></div></div><span class="val">2</span></div>
+          <div class="meter"><div><div class="lab">C 降低操作摩擦</div><div class="bar"><span style="width:80%"></span></div></div><span class="val">4</span></div>
+        </div>
+        <div>
+          <div class="meter"><div><div class="lab">D 建立信任</div><div class="bar"><span style="width:100%"></span></div></div><span class="val">5</span></div>
+          <div class="meter"><div><div class="lab">E 降低退養／留任</div><div class="bar"><span style="width:60%"></span></div></div><span class="val">3</span></div>
+        </div>
+      </div>
+      <p style="margin:12px 0 0">呼應受訪者 A「每隻貓都有一本護照」。以貓為主詞的需求卡＋採買參考，直接降低 P1 的新手焦慮（門窗防護原來很簡單）。信任維度滿分。<span class="pill">待改：無</span></p>
+    </div>
+
+    <!-- 8 -->
+    <div class="card">
+      <div class="scorehead"><h3 style="margin:0"><span class="rank">8</span>中途後台（兩檔位提醒·系統轉介·減負框架）</h3><span class="total">16 / 25</span></div>
+      <div class="grid g2" style="margin-top:12px">
+        <div>
+          <div class="meter"><div><div class="lab">A 消除被審查感</div><div class="bar"><span style="width:80%"></span></div></div><span class="val">4</span></div>
+          <div class="meter"><div><div class="lab">B 促進共感配對</div><div class="bar"><span style="width:60%"></span></div></div><span class="val">3</span></div>
+          <div class="meter"><div><div class="lab">C 降低操作摩擦</div><div class="bar"><span style="width:60%"></span></div></div><span class="val">3</span></div>
+        </div>
+        <div>
+          <div class="meter"><div><div class="lab">D 建立信任</div><div class="bar"><span style="width:40%"></span></div></div><span class="val">2</span></div>
+          <div class="meter"><div><div class="lab">E 降低退養／留任</div><div class="bar"><span style="width:80%"></span></div></div><span class="val">4</span></div>
+        </div>
+      </div>
+      <p style="margin:12px 0 0">面向供給端（中途），間接影響領養率：解決受訪者 A「追照片很煩」、C「一個人維持 60 分就用盡力氣」。「不合適由系統轉介，不通知原因」化解對立。認養人不直接感受，故對領養率為間接貢獻。<span class="pill">待改：把轉介結果回饋到認養人端</span></p>
+    </div>
+
+    <!-- 9 -->
+    <div class="card">
+      <div class="scorehead"><h3 style="margin:0"><span class="rank">9</span>成長相簿（脫敏社會證明）</h3><span class="total">15 / 25</span></div>
+      <div class="grid g2" style="margin-top:12px">
+        <div>
+          <div class="meter"><div><div class="lab">A 消除被審查感</div><div class="bar"><span style="width:60%"></span></div></div><span class="val">3</span></div>
+          <div class="meter"><div><div class="lab">B 促進共感配對</div><div class="bar"><span style="width:60%"></span></div></div><span class="val">3</span></div>
+          <div class="meter"><div><div class="lab">C 降低操作摩擦</div><div class="bar"><span style="width:60%"></span></div></div><span class="val">3</span></div>
+        </div>
+        <div>
+          <div class="meter"><div><div class="lab">D 建立信任</div><div class="bar"><span style="width:80%"></span></div></div><span class="val">4</span></div>
+          <div class="meter"><div><div class="lab">E 降低退養／留任</div><div class="bar"><span style="width:40%"></span></div></div><span class="val">2</span></div>
+        </div>
+      </div>
+      <p style="margin:12px 0 0">「回家第 N 個月」的近況牆提供社會證明，暗示「別人養得起來、也養得開心」。三位 persona 皆為輔助性瀏覽，未成為決策關鍵，但有效軟化整體氛圍。<span class="pill">待改：可連結到對應可認養的同型貓</span></p>
+    </div>
+
+    <!-- 10 -->
+    <div class="card">
+      <div class="scorehead"><h3 style="margin:0"><span class="rank">10</span>透明帳本（時報時銷）</h3><span class="total">12 / 25</span></div>
+      <div class="grid g2" style="margin-top:12px">
+        <div>
+          <div class="meter"><div><div class="lab">A 消除被審查感</div><div class="bar"><span style="width:40%"></span></div></div><span class="val">2</span></div>
+          <div class="meter"><div><div class="lab">B 促進共感配對</div><div class="bar"><span style="width:20%"></span></div></div><span class="val">1</span></div>
+          <div class="meter"><div><div class="lab">C 降低操作摩擦</div><div class="bar"><span style="width:60%"></span></div></div><span class="val">3</span></div>
+        </div>
+        <div>
+          <div class="meter"><div><div class="lab">D 建立信任</div><div class="bar"><span style="width:100%"></span></div></div><span class="val">5</span></div>
+          <div class="meter"><div><div class="lab">E 降低退養／留任</div><div class="bar"><span style="width:20%"></span></div></div><span class="val">1</span></div>
+        </div>
+      </div>
+      <p style="margin:12px 0 0">忠實還原受訪者 A 的「時報時銷」，信任維度滿分。但對「當下要不要領這隻貓」的決策幾乎不介入——三位 persona 沒人在決策時打開它。<b>是品牌公信力資產，不是領養率槓桿。</b><span class="pill">定位：長期信任，非轉換工具</span></p>
+    </div>
+  </div>
+
+  <div class="note" style="margin-top:24px">
+    <b>評分總覽：</b>前四名（配對測驗 23、個性檔案 22、曬貓回報 21、無責退回 20）全部集中在訪談指出的兩個閥門上——<b>鬆開前端審查感、守住後端不退養</b>。而做得很用心的透明帳本只有 12 分，不是因為做得差，而是它服務的是「長期信任」而非「這次領養」。這正說明：<b>對領養率的貢獻，和功能的精緻度無關，只和它踩不踩在流失點上有關。</b>
+  </div>
+</div></section>
+
+<!-- ============ 6 ============ -->
+<section id="s6"><div class="wrap">
+  <p class="kicker">Part 6 · 收斂</p>
+  <h2><span class="n">06</span>結論與優先改進清單</h2>
+  <p class="sub">測試證明網站的骨架正確：它把中途訪談的兩個核心痛點（被審查感、退養）當成硬規格在解。但三位 persona 各撞到一個小卡點，且都集中在「送出意向」那一刻——轉換漏斗的最後一格。</p>
+
+  <p class="sub" style="background:#EDF3EC;border-radius:12px;padding:12px 16px"><b>✅ 實作狀態（2026-07-09 更新）：</b>下表五項改進已全部落地到網站（index.html 與離線版），並以 Chromium 實測完整流程通過。</p>
+
+  <div class="tablewrap" role="region" aria-label="改進清單">
+    <table>
+      <caption>表 2．依「對領養率的邊際效益」排序的改進清單</caption>
+      <thead>
+        <tr><th>優先</th><th>改進點</th><th>問題（來自走查）</th><th>建議修法</th><th>影響 persona</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="who">P0</td>
+          <td><b>A · 草稿頁除罪化</b></td>
+          <td>P1 送出前自我懷疑「會不會被打槍」</td>
+          <td>草稿上方加一句：「中途看的是你願不願意學，不是你懂多少。」（呼應受訪者 D「人都有菜的時候」）</td>
+          <td>新手（大宗）</td>
+        </tr>
+        <tr>
+          <td class="who">P0</td>
+          <td><b>C · 送出隱私說明</b></td>
+          <td>P3 怕摘要被留底而遲疑</td>
+          <td>草稿旁標注：「這段摘要只寄給這位中途，不會公開、不進相簿。」</td>
+          <td>隱私敏感者</td>
+        </tr>
+        <tr>
+          <td class="who">P1</td>
+          <td><b>B · 前移「試相處」</b></td>
+          <td>P2 退養陰影在旅程頁才被安撫，太晚</td>
+          <td>配對結果頁的 CTA 旁加一行：「先見面、可試相處，不用一次決定。」</td>
+          <td>有退養經驗者</td>
+        </tr>
+        <tr>
+          <td class="who">P2</td>
+          <td>無責退回入口前移</td>
+          <td>退路是承諾的定心丸，但埋在支援區</td>
+          <td>在承諾決策點（聊聊／旅程末）補一個輕量入口</td>
+          <td>全體</td>
+        </tr>
+        <tr>
+          <td class="who">P2</td>
+          <td>相簿 → 可認養同型貓</td>
+          <td>社會證明未導流到轉換</td>
+          <td>近況卡點入可跳到「和牠同型、現在可認養」的貓</td>
+          <td>瀏覽型</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>一句話總結</h3>
+  <p>訪談告訴我們，領養率不是被「貓不夠多」卡住，而是被<b>「人不敢開始」與「貓被退回來」</b>兩件事夾住。合拍 PawMatch 的高分功能，恰好全部長在這兩個閥門上；而它現在最該補的，不是再加大功能，而是把三個發生在「送出那一刻」的微小猶豫——<b>怕被打槍、怕留底、怕重蹈覆轍</b>——用三句文案接住。這三句話，比再做一個新頁面更能提高領養率。</p>
+
+  <div class="note">
+    <b>方法備註：</b>本報告的行為與心理推論，全部可回溯到四份逐字稿（關鍵詞頻次：回報 24、兩隻 30、審核 20、問卷 16、合約 15、房東 10 次）。Persona 為訪談洞察的具象化，非真實個資；情緒標記為模擬走查的定性判斷，用於定位卡點、非量化實驗數據。實地驗證建議招募 5–8 位真實新手認養人做 moderated test，重點觀測「送出意向」那一格的放棄率。
+  </div>
+</div></section>
+
+<div class="wrap foot">
+  合拍 PawMatch 易用性測試報告　·　資料來源：4 場中途之家訪談逐字稿　·　受測：合拍 PawMatch MVP　·　本頁為研究示意，貓咪與帳本均為假資料。
+</div>
