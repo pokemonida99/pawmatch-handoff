@@ -30,7 +30,12 @@
 **網站已實作的 6 大區塊 + 模組深化：**
 Hero（利己主張＋雙 CTA）／生活樣態配對測驗（一屏一題·可跳過·貓掌進度·加權向量配對·引用答案的合拍理由）／個性敘事貓咪檔案（第一人稱故事·健康護照時間軸·以貓為主詞的需求卡）／認養旅程四階段／成長相簿＋回家之後（曬貓回報·抽獎·隱私預設私密）／新手支援與透明區（匿名發問·無責退回·透明帳本）／中途後台（兩檔位提醒·系統轉介）。
 
-**線上預覽（Artifact，私人連結，2026-07-09 更新版）：**
+**線上版（GitHub Pages，公開，2026-07-09 上線）：**
+- 專案導覽首頁：https://pokemonida99.github.io/pawmatch-handoff/
+- 網站 Demo：https://pokemonida99.github.io/pawmatch-handoff/cat-adoption-site/index.offline.html
+- 易用性報告：https://pokemonida99.github.io/pawmatch-handoff/reports/usability-report.html
+
+**Artifact 預覽（私人連結，內容同上）：**
 - 網站：https://claude.ai/code/artifact/4d4aba28-c2ac-4b66-a407-34d65ef60111
 - 易用性報告：https://claude.ai/code/artifact/0f09548f-0745-4a43-a100-42f37343f138
 
