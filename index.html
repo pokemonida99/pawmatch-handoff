@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>合拍 PawMatch｜專案導覽</title>
+<meta name="description" content="合拍 PawMatch:依據四場台灣貓咪中途之家訪談設計的認養平台 MVP,與其易用性測試報告。" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@700;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --cream:#FBF7F0; --latte:#F0E7D8; --clay:#C05621; --claydk:#9C4318;
+    --ink:#2F2C28; --mist:#47586A; --line:#E6DECF; --meadow:#5B7553;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:var(--cream);color:var(--ink);
+    font-family:"Noto Sans TC",-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;
+    line-height:1.8;font-size:16px;
+  }
+  .wrap{max-width:880px;margin:0 auto;padding:0 20px}
+  h1,h2{font-family:"Zen Maru Gothic","Noto Sans TC",sans-serif;font-weight:900;line-height:1.35;text-wrap:balance}
+  header{padding:64px 0 40px;text-align:center}
+  .paw{font-size:40px}
+  h1{font-size:clamp(30px,6vw,44px);margin:12px 0 10px}
+  .lede{color:var(--mist);max-width:38em;margin:0 auto;font-size:clamp(15px,2.4vw,18px)}
+  .cards{display:grid;gap:18px;grid-template-columns:1fr 1fr;margin:36px 0 8px}
+  @media(max-width:680px){.cards{grid-template-columns:1fr}}
+  a.card{
+    display:block;background:#fff;border:1px solid var(--line);border-radius:24px;
+    padding:26px 26px 22px;text-decoration:none;color:var(--ink);
+    box-shadow:0 1px 2px rgba(47,44,40,.05),0 10px 26px rgba(47,44,40,.06);
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  a.card:hover{transform:translateY(-3px);box-shadow:0 2px 4px rgba(47,44,40,.06),0 16px 34px rgba(47,44,40,.1)}
+  @media (prefers-reduced-motion:reduce){a.card{transition:none}a.card:hover{transform:none}}
+  a.card:focus-visible{outline:3px solid var(--clay);outline-offset:3px}
+  .card .tag{display:inline-block;font-size:12.5px;font-weight:700;letter-spacing:.1em;color:var(--claydk);background:var(--latte);padding:4px 12px;border-radius:999px}
+  .card h2{font-size:22px;margin:14px 0 8px}
+  .card p{margin:0;color:var(--mist);font-size:14.5px}
+  .card .go{display:inline-block;margin-top:16px;font-weight:700;color:var(--clay)}
+  section{padding:36px 0;border-top:1px solid var(--line)}
+  h2.sec{font-size:22px;margin:0 0 14px}
+  .steps{display:grid;gap:12px;grid-template-columns:repeat(4,1fr);margin:20px 0 4px}
+  @media(max-width:680px){.steps{grid-template-columns:1fr 1fr}}
+  .step{background:var(--latte);border-radius:16px;padding:14px 16px}
+  .step b{display:block;font-family:"Zen Maru Gothic",sans-serif;margin-bottom:4px}
+  .step span{font-size:13.5px;color:var(--mist)}
+  p.body{color:var(--ink);max-width:42em;margin:0 0 14px}
+  .note{background:var(--latte);border-radius:16px;padding:16px 20px;font-size:14px;color:var(--mist);margin:8px 0}
+  code{background:var(--latte);padding:2px 7px;border-radius:6px;font-size:.9em}
+  footer{padding:36px 0 48px;border-top:1px solid var(--line);text-align:center;color:var(--mist);font-size:13.5px}
+  footer a{color:var(--claydk)}
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <div class="paw" aria-hidden="true">🐾</div>
+  <h1>合拍 PawMatch</h1>
+  <p class="lede">一個把「審核你」換成「認識你」的貓咪認養平台 MVP——依據四場台灣貓咪中途之家的深度訪談設計,並附完整的易用性測試報告。</p>
+</header>
+
+<main class="wrap">
+  <div class="cards">
+    <a class="card" href="cat-adoption-site/index.offline.html">
+      <span class="tag">互動 DEMO</span>
+      <h2>認養網站本體</h2>
+      <p>生活樣態配對測驗、第一人稱貓咪檔案、認養旅程、曬貓回報、透明帳本、中途後台——單頁式、零後端,可完整走完配對到送出意向的流程。</p>
+      <span class="go">開始逛 →</span>
+    </a>
+    <a class="card" href="reports/usability-report.html">
+      <span class="tag">研究報告</span>
+      <h2>易用性測試報告</h2>
+      <p>四場中途訪談重點整理 → 領養者行為與心理 8 條洞察 → 三位 persona 模擬走查 → 十大功能對「領養率」的貢獻度評分與改進清單。</p>
+      <span class="go">看報告 →</span>
+    </a>
+  </div>
+
+  <section>
+    <h2 class="sec">這個專案怎麼來的</h2>
+    <p class="body">台灣的貓咪中途之家普遍卡在同一個矛盾:<strong>審核越嚴,退養越少,但願意走進審核的人也越少</strong>。四位受訪中途幾乎逐字說出同樣的話——「問卷一出去,人就不見了」。</p>
+    <div class="steps">
+      <div class="step"><b>① 訪談</b><span>4 場中途之家深度訪談,整理逐字稿</span></div>
+      <div class="step"><b>② 分析</b><span>領養者行為與心理 8 條洞察(證據→機制→設計意涵)</span></div>
+      <div class="step"><b>③ 設計</b><span>網站 MVP:凡轉換率與被審查感衝突,先消除被審查感</span></div>
+      <div class="step"><b>④ 驗證</b><span>3 位 persona 模擬走查+功能對領養率評分,改進已落地</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="sec">核心設計主張</h2>
+    <p class="body">用<strong>生活樣態配對</strong>取代審核問卷、用<strong>個性敘事</strong>取代條件比對、用<strong>去人化的曬貓回報</strong>取代監控式追蹤;同時守住中途在乎的底線——中途保有最終判斷權、無責退回明路、健康護照與透明帳本。</p>
+    <p class="body">易用性測試的結論:評分最高的功能,全部踩在「<strong>鬆開前端審查感</strong>」與「<strong>守住後端不退養</strong>」兩個閥門上;而三個流失卡點都發生在「送出意向」那一刻,已用三句文案接住(怕被打槍、怕留底、怕重蹈覆轍)。</p>
+  </section>
+
+  <section>
+    <h2 class="sec">想在本機跑或接續開發</h2>
+    <p class="body">整個網站是單一 HTML 檔,不需安裝任何東西:clone 後雙擊 <code>cat-adoption-site/index.offline.html</code> 即可。要改程式改 <code>cat-adoption-site/index.html</code>(React + Tailwind CDN 版)。詳見 repo 的 <a href="https://github.com/pokemonida99/pawmatch-handoff#readme">README</a> 與 <code>HANDOFF.md</code>。</p>
+    <div class="note">本站為研究示意:貓咪、中途、相簿與帳本皆為假資料;persona 為訪談洞察的具象化,非真實個資。</div>
+  </section>
+</main>
+
+<footer>
+  合拍 PawMatch · 2026 · <a href="https://github.com/pokemonida99/pawmatch-handoff">GitHub Repo</a>
+</footer>
+
+</body>
+</html>

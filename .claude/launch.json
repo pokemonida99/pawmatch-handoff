@@ -6,6 +6,12 @@
       "runtimeExecutable": "python3",
       "runtimeArgs": ["-m", "http.server", "8641", "--directory", "cat-adoption-site"],
       "port": 8641
+    },
+    {
+      "name": "pawmatch-root",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8646"],
+      "port": 8646
     }
   ]
 }
