@@ -167,15 +167,17 @@
 
 <header class="masthead">
   <div class="wrap">
-    <span class="eyebrow">🐾 UX Research · 易用性測試</span>
+    <span class="eyebrow">🐾 UX Research · 易用性測試 · v2 重跑版</span>
     <h1>找貓的人，為什麼在門口就走了？</h1>
-    <p class="lede">四場中途之家深度訪談 → 領養者行為與心理分析 → 以三位領養者模擬走查「合拍 PawMatch」，逐一為對領養率有貢獻的功能評分。</p>
+    <p class="lede">中途之家深度訪談 → 領養者行為與心理分析 → 以四位領養者模擬走查「合拍 PawMatch」，逐一為對領養率有貢獻的功能評分。v2 從逐字稿原文重新編碼推導，不沿用 v1 結論。</p>
     <div class="meta">
-      <span><b>受訪者</b> 4 位中途／協會（台中社團管理員、雙北奶貓中途、專職化協會 ×2）</span>
-      <span><b>方法</b> 訪談編碼 · Persona-based 走查 · 功能貢獻度評分</span>
-      <span><b>受測對象</b> 合拍 PawMatch MVP</span>
+      <span><b>受訪者</b> 3 位中途／協會（4 份錄音檔，見勘誤）</span>
+      <span><b>方法</b> 逐字稿主題編碼 · Persona 認知走查（實機） · 漏斗錨定評分</span>
+      <span><b>受測對象</b> 合拍 PawMatch MVP（含 2026-07-09 P0 修正版）</span>
+      <span><b>版本</b> v2 · 2026-07-09 · Fable 5</span>
     </div>
     <nav class="toc" aria-label="章節">
+      <a href="#s0">⓪ v1 勘誤</a>
       <a href="#s1">① 訪談整理</a>
       <a href="#s2">② 領養者心理</a>
       <a href="#s3">③ 測試方法</a>
@@ -186,581 +188,426 @@
   </div>
 </header>
 
+<!-- ============ 0 ============ -->
+<section id="s0"><div class="wrap">
+  <p class="kicker">Part 0 · 資料勘誤</p>
+  <h2><span class="n">00</span>重跑時發現 v1 的三個資料錯誤</h2>
+  <p class="sub">先把地基修正，結論才有意義。以下三處是逐字稿層級的錯誤，v1 的分析建立在其上。</p>
+
+  <div class="grid g3">
+    <div class="card">
+      <h4>受訪者是 3 位，不是 4 位</h4>
+      <p style="margin:8px 0 0;font-size:14.5px">兩份錄音檔的結尾句與開頭句逐字相接（「…專職的工作人員在旁邊陪伴跟引導…」）——是<b>同一場訪談被切成兩段</b>。v1 把同一人的證詞當成兩個獨立來源，高估了收斂度。</p>
+    </div>
+    <div class="card">
+      <h4>A 的逐字稿整份重複一次</h4>
+      <p style="margin:8px 0 0;font-size:14.5px">第 1–150 行與第 151–295 行內容相同。v1 的關鍵詞頻次以全檔計算，<b>數字被灌水約一倍</b>。</p>
+    </div>
+    <div class="card">
+      <h4>去重後的正確頻次</h4>
+      <p style="margin:8px 0 0;font-size:14.5px;font-variant-numeric:tabular-nums">兩隻 19（v1：30）· 回報 18（v1：24）· 黑名單 14 · 合約 13 · 審核 12（v1：20）· 問卷 7（v1：16）· 房東 6 · 表單 5</p>
+    </div>
+  </div>
+  <p class="note" style="margin-top:18px"><b>勘誤不推翻 v1 的方向結論</b>——「問卷＝流失」的證據力來自三位受訪者各自的直接陳述，而非詞頻。但它提醒我們：v1 的其餘判斷也需要重新驗證，這正是本版做的事。</p>
+</div></section>
+
 <!-- ============ 1 ============ -->
 <section id="s1"><div class="wrap">
-  <p class="kicker">Part 1 · 研究基礎</p>
-  <h2><span class="n">01</span>四場訪談的重點整理</h2>
-  <p class="sub">四位受訪者的規模與型態不同，但對「領養這件事到底卡在哪」的判斷高度收斂。以下依主題把他們的說法對齊，方便看出共識與分歧。</p>
+  <p class="kicker">Part 1 · 原料</p>
+  <h2><span class="n">01</span>三位受訪者：三種不同的「送養哲學」</h2>
+  <p class="sub">v1 把訪談整理成一致的合唱；v2 保留他們的分歧——因為產品策略恰好取決於分歧處。</p>
 
-  <div class="tablewrap" role="region" aria-label="訪談重點對照表">
-    <table>
-      <caption>表 1．四位中途受訪者的主題對照（摘自逐字稿）</caption>
-      <thead>
-        <tr>
-          <th>主題</th>
-          <th>A · 台中社團管理員</th>
-          <th>B · 雙北奶貓中途</th>
-          <th>C／D · 專職化協會</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="who">最大困擾</td>
-          <td>審核最花時間；每個中途標準不一，人被重複審</td>
-          <td>「送養是最大的困擾，要找適合的人很難」</td>
-          <td>沒有公權力可督導認養人；協會難穩定運作</td>
-        </tr>
-        <tr>
-          <td class="who">前端流失</td>
-          <td>Google 表單「問題一多，就沒有人填了」</td>
-          <td>「問卷一出去，人就不見了」</td>
-          <td>「越來越多人不喜歡到中途認養，覺得要被檢查很多」</td>
-        </tr>
-        <tr>
-          <td class="who">配對哲學</td>
-          <td>看認養「態度」，不問收入</td>
-          <td>層層關卡、慢慢等有緣人，寧缺勿濫</td>
-          <td>把貓「當成一個人、寫成一個故事」，吸引共鳴者→退養率低</td>
-        </tr>
-        <tr>
-          <td class="who">審核方式</td>
-          <td>改用私訊「聊天」問：年紀／家庭／職業／地區／租或買／房東同意</td>
-          <td>問卷→電訪→約到家跟貓互動→看肢體動作→家訪防護</td>
-          <td>面談 1.5 小時邊玩貓邊聊；看「面對困境如何歸因」的人格特質</td>
-        </tr>
-        <tr>
-          <td class="who">信任機制</td>
-          <td>合約核對身分證；FB 可看首頁判斷人；黑名單</td>
-          <td>認養同意書；門窗防護家訪；不良認養人拒往</td>
-          <td>時報時銷、公開門面、專職人力；把關是為貓</td>
-        </tr>
-        <tr>
-          <td class="who">送養後追蹤</td>
-          <td>一對一要照片，「忘記傳就要追，追久對方也覺得煩」</td>
-          <td>認養人 LINE 群組＋相簿；用「奶媽心情不好」逼曬貓</td>
-          <td>幸福回報系統（自登入、照片公開但匿名）＋系統提醒＋抽獎券</td>
-        </tr>
-        <tr>
-          <td class="who">共同信念</td>
-          <td colspan="3">貓的一生 15–20 年，退養對貓傷害極大 → 寧可慢，也不送給不適合的人；<b>兩隻不拆胎一起送</b>（社會化）。</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <h3>三個反覆出現、幾乎逐字相同的訊號</h3>
-  <div class="grid g3" style="margin-top:8px">
-    <div class="card tint">
-      <h4>問卷＝流失閥門</h4>
-      <div class="quote" style="margin:8px 0 0">大家點進去表單，看到<em>那一堆問題</em>的時候，就不會有人填了。<span class="who">— 受訪者 A</span></div>
+  <div class="grid g3">
+    <div class="card">
+      <p class="role">A · 雙北個人奶貓中途</p>
+      <h4 style="margin-top:6px">層層關卡派</h4>
+      <p style="font-size:14px;margin:8px 0">問卷→電訪／面談→到家與貓互動（看肢體、看碰貓動作）→環境錄影→家訪拉防護網。同胎一律不拆、新手建議養兩隻。LINE 認養人群組＋相簿，「奶媽心情不好，PO 照片吧」情感式催報。</p>
+      <div class="quote">「問卷一出去人就不見了……這對我來講是好的，因為我已經篩選到不適合的人。」<span class="who">她認為摩擦是功能，不是缺陷——「媒合無解」「條件不可能放寬」</span></div>
     </div>
-    <div class="card tint">
-      <h4>被檢查＝心理排斥</h4>
-      <div class="quote" style="margin:8px 0 0">越來越多人不喜歡到中途認養，他覺得說<em>要被檢查</em>很多東西。<span class="who">— 受訪者 C</span></div>
+    <div class="card">
+      <p class="role">B · 台中社團管理員（協會創辦中）</p>
+      <h4 style="margin-top:6px">實用主義派</h4>
+      <p style="font-size:14px;margin:8px 0">Google 表單失敗後改私訊聊天問（年紀／家庭／職業不問收入／地區／租或買／房東）。看「認養態度」不看收入。必簽合約＋核對身分證——「簽了合約都變乖了」。發文格式化：地區、年齡、健康、親人親貓親狗，一目了然。</p>
+      <div class="quote">「大家點進去表單，看到那一堆問題，就不會有人填了。」<span class="who">也是他：「大家都蠻懶的，也不想透露隱私，但又想要領養貓」</span></div>
     </div>
-    <div class="card tint">
-      <h4>故事＝低退養配對</h4>
-      <div class="quote" style="margin:8px 0 0">把牠敘述成一個人…會有<em>跟這些文字共鳴</em>的人來認養，退養可能性小很多。<span class="who">— 受訪者 C</span></div>
+    <div class="card">
+      <p class="role">C · 台中專職化協會（8–9 年）</p>
+      <h4 style="margin-top:6px">系統設計派</h4>
+      <p style="font-size:14px;margin:8px 0">專職給薪人力、60 隻容量、公開門面。一次 1.5 小時邊玩貓邊聊，看人格特質：困境歸因（「遲到是你晚搭車還是司機晚來」）、對異見的開放度。幸福回報系統：自登帳號、公開但匿名、系統提醒、抽獎券。</p>
+      <div class="quote">「越來越多人不喜歡到中途認養貓，覺得要被檢查很多東西。」<span class="who">他的解法：「系統來提醒你，不是人來提醒你——像忘記繳罰單那種感覺」</span></div>
     </div>
   </div>
 
-  <div class="note" style="margin-top:22px">
-    <b>整理結論：</b>領養率的瓶頸不在「貓不夠可愛」或「曝光不夠」（受訪者 D 明說社群擴散已經最有效），而在<b>人願不願意走進審核、以及配對品質好不好</b>。前者決定「有多少人開始」，後者決定「送出去的會不會退回來」。一個好的認養網站要同時鬆開這兩個閥門。
+  <h3>三方收斂的五個訊號（證據力最高）</h3>
+  <ul class="clean">
+    <li><b>長表單是第一流失點</b>——三位各自用幾乎相同的話描述（問卷不見人／表單沒人填／怕被檢查）。</li>
+    <li><b>審核的實質是態度與人格，不是資料</b>——三位都明說不問收入；A 看配合意願、B 看用心程度、C 看歸因風格。問卷欄位只是風險初篩的代理變數。</li>
+    <li><b>退養是共同的底線恐懼，且有具體案例</b>——A：失寵的貓接回時全身跳蚤；B：貓被直接丟掉、下落不明、「很自責」。</li>
+    <li><b>「配合意願」是生態的信任貨幣</b>——A「願意配合就足夠讓我們放心」；B「隔天就弄好、先拍給我看，我去的時候就很放心」；C「你做不到，我們可以怎麼幫你做到」。</li>
+    <li><b>信任稀缺是雙向的</b>——認養人怕被審；中途怕虐貓（茶茶事件被 A、B 不約而同提起）、怕發黑名單反被告（B 被威脅提告、A 上過法院）、怕被妖魔化（C：「愛媽＝妨礙的愛」）。</li>
+  </ul>
+
+  <h3>三方分歧的三個訊號（v1 未處理，對策略關鍵）</h3>
+  <div class="grid g3">
+    <div class="card tint"><h4>A：摩擦＝自我篩選</h4><p style="font-size:14px;margin:8px 0 0">平台若被理解為「要中途放寬標準」，數量上占大宗的 A 型中途不會使用。合拍把「最終判斷權在中途」設為硬規則，正確繞開此雷。</p></div>
+    <div class="card tint"><h4>C：平台只做到擴散</h4><p style="font-size:14px;margin:8px 0 0">「所有認養平台的共通性：只做到幫助擴散」，而社群早就是最有效的擴散。新平台的價值主張只能是媒合品質＋送養後管理。</p></div>
+    <div class="card tint"><h4>B：FB 懲罰外部連結</h4><p style="font-size:14px;margin:8px 0 0">「連結超過兩個，觸及幾乎歸零。」獨立網站的連結在最大流量池會被演算法系統性壓制——v1 完全沒看到的通路風險。</p></div>
   </div>
 </div></section>
 
 <!-- ============ 2 ============ -->
 <section id="s2"><div class="wrap">
-  <p class="kicker">Part 2 · 使用者洞察</p>
-  <h2><span class="n">02</span>領養者的行為與心理</h2>
-  <p class="sub">把四份逐字稿裡「認養人如何反應」的片段抽出來編碼，得到八條行為／心理模式。每一條都走「訪談證據 → 心理機制 → 對網站的設計意涵」的推論鏈。</p>
+  <p class="kicker">Part 2 · 分析</p>
+  <h2><span class="n">02</span>領養者的行為與心理（10 條）</h2>
+  <p class="sub">方法警語：這些是「中途觀察到的領養者」——<b>二手證據</b>。標注【強】＝兩位以上獨立支持；【中】＝單一受訪者但有具體案例。v1 有 8 條；v2 修訂為 10 條並補上證據等級。</p>
 
-  <div class="finding">
-    <div class="fnum">1</div>
-    <div>
-      <h4>被審查感是第一流失點——自尊防衛，不是懶</h4>
-      <p>問卷一出去人就不見、看到一堆問題就不填。表面像「懶」，但受訪者 C 點破：他們<b>被檢核的過程「很不舒服」</b>。這是自尊與被信任需求受威脅時的防衛反應。</p>
-      <div class="chain">
-        <span class="chip"><b>證據</b> 「問卷一出去人就不見了」</span>
-        <span class="chip"><b>機制</b> 門檻＝守門＝我被當成嫌疑人</span>
-      </div>
-      <p class="imp"><b>設計意涵：</b>絕不能讓首屏出現「審核／資格／條件」框架；把資訊蒐集重寫成「幫你找貓」的利己對話。</p>
-    </div>
-  </div>
-
-  <div class="finding">
-    <div class="fnum">2</div>
-    <div>
-      <h4>共感型認養者最穩定——他在找「一個像自己的靈魂」</h4>
-      <p>受訪者 C／D 刻意把貓寫成「一個人、一個個性」，結果來的人「心裡已經對這個生命有共感」，退養率明顯較低。認養動機的底層是<b>情感投射與同理</b>，不是條件比對。</p>
-      <div class="chain">
-        <span class="chip"><b>證據</b> 「找一個跟自己個性很像的」</span>
-        <span class="chip"><b>機制</b> 先動情 → 承諾更黏</span>
-      </div>
-      <p class="imp"><b>設計意涵：</b>檔案頁必須「個性敘事優先」，品種年齡次之；配對理由要能回扣「你這種人 × 這種貓」。</p>
-    </div>
-  </div>
-
-  <div class="finding">
-    <div class="fnum">3</div>
-    <div>
-      <h4>抗拒回報 ≠ 壞人——是隱私敏感</h4>
-      <p>受訪者 D 特別替認養人講話：抗拒被拉進 LINE 回報群的人「很有可能只是非常在意自己的隱私」，愛媽「預設立場」才是盲點。監控感會把好認養人也一起趕跑。</p>
-      <div class="chain">
-        <span class="chip"><b>證據</b> 「不是每個人都喜歡被拉到群裡回報」</span>
-        <span class="chip"><b>機制</b> 人來催＝被監視</span>
-      </div>
-      <p class="imp"><b>設計意涵：</b>回報要「去人化＋預設私密」：系統中性提醒（像帳單）＋照片預設只給中途看＋曬貓可抽獎。</p>
-    </div>
-  </div>
-
-  <div class="finding">
-    <div class="fnum">4</div>
-    <div>
-      <h4>低摩擦傾向——想一次到位，討厭來回</h4>
-      <p>受訪者 A 觀察到聰明的認養人會「把答案整理成一大篇直接貼給我」。他們不是不願給資訊，是<b>討厭多次來回與不確定感</b>。</p>
-      <div class="chain">
-        <span class="chip"><b>證據</b> 「該問的都整理好，一次貼給我」</span>
-        <span class="chip"><b>機制</b> 認知負荷 × 不確定 = 放棄</span>
-      </div>
-      <p class="imp"><b>設計意涵：</b>一屏一題、可跳過、正向進度；結果頁直接生成「預填自我介紹草稿」，讓一次到位變成預設路徑。</p>
-    </div>
-  </div>
-
-  <div class="finding">
-    <div class="fnum">5</div>
-    <div>
-      <h4>新手焦慮——怕自己「不夠格」而不敢開始</h4>
-      <p>受訪者 D：新手不懂很正常，「人都有菜的時候」，只要心態正確就送。但認養人自己不知道這點，會因為怕做錯、怕被打槍而卻步。</p>
-      <div class="chain">
-        <span class="chip"><b>證據</b> 「不懂很合理，看的是接納度」</span>
-        <span class="chip"><b>機制</b> 冒牌者焦慮 → 不敢踏出第一步</span>
-      </div>
-      <p class="imp"><b>設計意涵：</b>新手支援要正面除罪：「問題不是你的失敗，是每隻貓附贈的關卡」；提供匿名發問，明說「不影響任何紀錄」。</p>
-    </div>
-  </div>
-
-  <div class="finding">
-    <div class="fnum">6</div>
-    <div>
-      <h4>未來不確定性——租屋、房東、結婚生子是真實顧慮</h4>
-      <p>租屋是反覆出現的痛點（房東換人、搬家丟貓）。認養人自己也在猶豫「我扛得起 15 年嗎」。逼問會製造防衛，但完全不提又是風險。</p>
-      <div class="chain">
-        <span class="chip"><b>證據</b> 「房東同意嗎」「未來規劃都算進去了嗎」</span>
-        <span class="chip"><b>機制</b> 逼問→防衛；提醒→被在乎</span>
-      </div>
-      <p class="imp"><b>設計意涵：</b>把房東題寫成「提醒」而非「盤查」：「先確認過房東，之後的旅程會順很多」。</p>
-    </div>
-  </div>
-
-  <div class="finding">
-    <div class="fnum">7</div>
-    <div>
-      <h4>沒有退路＝隱瞞退養——比退養更糟的是失聯</h4>
-      <p>受訪者 A 遇過送出去的貓「直接被丟掉」，因為認養人怕被罵而不敢說。當唯一的選項是被譴責，人就會選擇消失。</p>
-      <div class="chain">
-        <span class="chip"><b>證據</b> 「送出去的貓被丟掉，不知去向」</span>
-        <span class="chip"><b>機制</b> 怕譴責 → 隱瞞 → 貓失蹤</span>
-      </div>
-      <p class="imp"><b>設計意涵：</b>提供「無責退回」明路：「任何原因養不了，貓永遠可以回家，我們不追問」，把最壞情況導回安全。</p>
-    </div>
-  </div>
-
-  <div class="finding">
-    <div class="fnum">8</div>
-    <div>
-      <h4>信任稀缺——這個生態的人先假設你有問題</h4>
-      <p>黑名單、時報時銷、被醫生告上法院、愛媽被妖魔化——整個生態互信極低。認養人也承接了這份戒備，需要平台先給出可驗證的透明訊號。</p>
-      <div class="chain">
-        <span class="chip"><b>證據</b> 「時報時銷」「黑名單反被告」</span>
-        <span class="chip"><b>機制</b> 低信任 → 需要外部憑證</span>
-      </div>
-      <p class="imp"><b>設計意涵：</b>中途實名、健康護照、透明帳本、無責退回，四個信任錨點必須看得見。</p>
-    </div>
-  </div>
+  <div class="finding"><div class="fnum">01</div><div>
+    <h4>被審查感觸發自尊防衛，在第一個表單就離場 <span class="pill">強 · 3 來源</span></h4>
+    <p style="font-size:14.5px;margin:6px 0 0">C 進一步指出這是結構性的：「這些東西很可能是照顧動物前本來就該準備好的」——問題不在要求本身，在<b>要求被呈現的框架</b>（審你 vs 幫你）。</p>
+  </div></div>
+  <div class="finding"><div class="fnum">02</div><div>
+    <h4>「懶＋隱私敏感＋仍然想領養」三者並存 <span class="pill">強</span></h4>
+    <p style="font-size:14.5px;margin:6px 0 0">B 的原話一句話含兩個洞察：「大家現在都蠻懶的，也不想要透露太多自己的隱私，但又想要領養貓。」低摩擦與隱私說明必須<b>同時</b>做，只做一個都接不住。</p>
+  </div></div>
+  <div class="finding"><div class="fnum">03</div><div>
+    <h4>資訊不全＝無聲流失 <span class="pill">中 · v2 新增</span></h4>
+    <p style="font-size:14.5px;margin:6px 0 0">B：「文章沒寫清楚（多大、性別、親不親狗），他可能懶得問，<b>就直接找別人</b>。」領養者不會為缺漏的資訊發問——他們直接跳走。檔案的可掃描完整度是轉換率，不只是品質。</p>
+  </div></div>
+  <div class="finding"><div class="fnum">04</div><div>
+    <h4>共感型認養最穩定——他在找一個像自己的靈魂 <span class="pill">中 · 唯一親證因果</span></h4>
+    <p style="font-size:14.5px;margin:6px 0 0">C：「把牠敘述成一個人……跟這些文字共鳴的人來認養，心裡已經對這個生命有共感……<b>退養或放棄照顧的可能性小很多</b>。」全語料唯一由受訪者親自陳述因果、且有長期觀察支持的機制。</p>
+  </div></div>
+  <div class="finding"><div class="fnum">05</div><div>
+    <h4>抗拒回報≠壞認養人，是隱私與被監視感 <span class="pill">強</span></h4>
+    <p style="font-size:14.5px;margin:6px 0 0">C 替這群人辯護：「抗拒的人很有可能只是非常在意自己的隱私。」解法三件套也是 C 給的：去人化、匿名公開、抽獎誘因。他同時誠實補充：<b>「過了一年兩年就不太回報」是常態</b>——回報設計要接受時間衰減，而不是對抗它。</p>
+  </div></div>
+  <div class="finding"><div class="fnum">06</div><div>
+    <h4>自我介紹的理想型已經存在：整理好一大篇直接貼上 <span class="pill">中</span></h4>
+    <p style="font-size:14.5px;margin:6px 0 0">B：「有些認養人已經整理好一大篇答案，直接整篇貼給我——該問的都有寫到，我就<b>趕快進入下一個流程</b>。」預填草稿功能＝把這個最佳案例自動化給所有人。</p>
+  </div></div>
+  <div class="finding"><div class="fnum">07</div><div>
+    <h4>租屋與房東是真實顧慮，不是藉口 <span class="pill">強</span></h4>
+    <p style="font-size:14.5px;margin:6px 0 0">A 與 B 都把房東同意列為必問；A 補充縱深：「現任房東願意，搬家後新房東可能不願意」——這是退養的常見劇本，值得在承諾前被溫柔提醒。</p>
+  </div></div>
+  <div class="finding"><div class="fnum">08</div><div>
+    <h4>沒有退路的人會選擇消失，而不是求助 <span class="pill">中</span></h4>
+    <p style="font-size:14.5px;margin:6px 0 0">B 的貓「被直接丟掉」發生在沒有合約、沒有回報管道的送養。A 的無條件收回（「任何原因，跟我講就帶回來」）配上事前約定，讓退回變成不失面子的正路——「他也覺得好，沒關係」。</p>
+  </div></div>
+  <div class="finding"><div class="fnum">09</div><div>
+    <h4>新手的無知是常態，接納度才是變數 <span class="pill">中</span></h4>
+    <p style="font-size:14.5px;margin:6px 0 0">C：「人都有菜的時候。」他評估的是你<b>怎麼回應</b>新觀念，不是你已經懂多少。新手需要「不懂也可以開始」的入口與隨手可及的求助管道。</p>
+  </div></div>
+  <div class="finding"><div class="fnum">10</div><div>
+    <h4>重複認養與口碑轉介是被忽略的成長迴路 <span class="pill">中 · v2 新增</span></h4>
+    <p style="font-size:14.5px;margin:6px 0 0">A 的認養人群組裡「從一隻認養到六隻」、認養人互相推薦。老認養人是轉換率最高、退養率最低的族群——但多數平台只把他們當「回報義務人」，沒有當「下一次認養的入口」。</p>
+  </div></div>
 </div></section>
 
 <!-- ============ 3 ============ -->
 <section id="s3"><div class="wrap">
   <p class="kicker">Part 3 · 方法</p>
   <h2><span class="n">03</span>測試怎麼做</h2>
-  <p class="sub">用上面八條心理，反推出三位最能壓力測試網站的領養者 persona——各自代表一種主要流失風險。再讓他們走同一組任務腳本，記錄想法、情緒與卡點。</p>
+  <p class="sub">Persona 驅動的認知走查，在實際網站上以瀏覽器完成任務腳本、逐步記錄推進與阻力。<b>這不是真人測試</b>——它能找出流程斷點與文案缺口，不能測量真實放棄率；真人驗證設計見 Part 6。</p>
 
-  <div class="grid g3">
+  <div class="grid g2">
     <div class="persona">
-      <div class="top"><div class="avatar">🧍‍♀️</div><div><h4 style="margin:0">林思妤</h4><span class="role">P1 · 怕被審的新手</span></div></div>
+      <div class="top"><div class="avatar">🙋‍♀️</div><div><h4 style="margin:0">P1 林思妤 <span class="pill">新手焦慮</span></h4><p style="margin:2px 0 0;font-size:13px;color:var(--muted)">28 · 行銷企劃 · 租屋</p></div></div>
       <div class="body">
-        <div class="kv"><b>背景</b><span>28 歲，行銷企劃，台北租屋</span></div>
-        <div class="kv"><b>經驗</b><span>第一次養貓</span></div>
-        <div class="kv"><b>風險</b><span>對應洞察 1·5·6：一看到像審核就會關頁</span></div>
-        <div class="kv"><b>心聲</b><span>「我只是想養隻貓，不是來面試的。」</span></div>
+        <div class="kv"><b>風險型態</b><span>怕不夠格而不敢開始（洞察 1·7·9）</span></div>
+        <div class="kv"><b>走查路徑</b><span>首頁 → 配對測驗 → 檔案 → 送出意向</span></div>
       </div>
     </div>
     <div class="persona">
-      <div class="top"><div class="avatar">🧑‍💻</div><div><h4 style="margin:0">陳柏諺</h4><span class="role">P2 · 找共感的獨居者</span></div></div>
+      <div class="top"><div class="avatar">🧔</div><div><h4 style="margin:0">P2 陳柏諺 <span class="pill">退養陰影</span></h4><p style="margin:2px 0 0;font-size:13px;color:var(--muted)">34 · 工程師 · 獨居</p></div></div>
       <div class="body">
-        <div class="kv"><b>背景</b><span>34 歲，工程師，獨居自有</span></div>
-        <div class="kv"><b>經驗</b><span>養過、退過一次，有陰影</span></div>
-        <div class="kv"><b>風險</b><span>對應洞察 2·4：要「對的貓」，不要被推銷</span></div>
-        <div class="kv"><b>心聲</b><span>「上次條件配對，結果我們合不來。」</span></div>
+        <div class="kv"><b>風險型態</b><span>找共感、對「一次定終身」過敏（洞察 4·8）</span></div>
+        <div class="kv"><b>走查路徑</b><span>首頁 → 測驗 → 深讀故事 → 猶豫點觀察</span></div>
       </div>
     </div>
     <div class="persona">
-      <div class="top"><div class="avatar">🧑</div><div><h4 style="margin:0">黃士豪</h4><span class="role">P3 · 重隱私的抗拒者</span></div></div>
+      <div class="top"><div class="avatar">🕶️</div><div><h4 style="margin:0">P3 黃士豪 <span class="pill">隱私敏感</span></h4><p style="margin:2px 0 0;font-size:13px;color:var(--muted)">31 · 自由接案 · 重隱私</p></div></div>
       <div class="body">
-        <div class="kv"><b>背景</b><span>31 歲，接案設計，與伴侶同住</span></div>
-        <div class="kv"><b>經驗</b><span>養過一隻</span></div>
-        <div class="kv"><b>風險</b><span>對應洞察 3·7：討厭被拉群、被追蹤回報</span></div>
-        <div class="kv"><b>心聲</b><span>「我會好好養，但別盯著我。」</span></div>
+        <div class="kv"><b>風險型態</b><span>抗拒留資料、抗拒被追蹤（洞察 2·5）</span></div>
+        <div class="kv"><b>走查路徑</b><span>跳過部分測驗 → 檢查資料去向 → 回家之後頁</span></div>
+      </div>
+    </div>
+    <div class="persona">
+      <div class="top"><div class="avatar">👩‍👧</div><div><h4 style="margin:0">P4 吳佩珊 <span class="pill">目標明確 · v2 新增</span></h4><p style="margin:2px 0 0;font-size:13px;color:var(--muted)">36 · 已婚 · 家有一狗一幼兒</p></div></div>
+      <div class="body">
+        <div class="kv"><b>風險型態</b><span>硬條件掃描：地區、親狗、親幼兒；缺一項就跳走（洞察 3）</span></div>
+        <div class="kv"><b>走查路徑</b><span><b>跳過測驗</b> → 直接逛貓列表 → 掃描事實 → 比較</span></div>
       </div>
     </div>
   </div>
-
-  <h3>任務腳本（三人共用）</h3>
-  <ul class="clean">
-    <li><b>T1</b>　落地首頁，判斷「這裡能不能幫到我」（5 秒測試）。</li>
-    <li><b>T2</b>　完成生活樣態配對，看到推薦結果。</li>
-    <li><b>T3</b>　深入一隻貓的檔案，決定要不要進一步。</li>
-    <li><b>T4</b>　聯繫中途 / 送出意向。</li>
-    <li><b>T5</b>　理解「認養之後」會發生什麼（回報、退路、支援）。</li>
-  </ul>
-  <p class="note"><b>情緒標記：</b><span class="emo p">＋ 推進</span> 降低阻力、想繼續　<span class="emo z">○ 中性</span> 沒感覺、沒幫助也沒傷害　<span class="emo n">－ 阻力</span> 猶豫、想退出。走查即為受測網站「合拍 PawMatch」現行 MVP。</p>
+  <p class="note" style="margin-top:18px"><b>為什麼 v1 需要第四位 persona：</b>P1–P3 全走配對測驗——v1 等於沒有測「不走測驗」的路徑。B 的證詞（條件不合就默默找別人）指向一群跳過敘事、直接掃描事實的比較型領養者。</p>
 </div></section>
 
 <!-- ============ 4 ============ -->
 <section id="s4"><div class="wrap">
-  <p class="kicker">Part 4 · 模擬走查</p>
-  <h2><span class="n">04</span>三位領養者的實際旅程</h2>
-  <p class="sub">以第一人稱記錄每位 persona 在每個任務當下的想法與情緒。引號內為網站實際微文案。</p>
+  <p class="kicker">Part 4 · 走查結果</p>
+  <h2><span class="n">04</span>四位領養者的實際旅程</h2>
 
-  <!-- P1 -->
-  <div class="card" style="margin-bottom:22px">
-    <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px">
-      <div class="avatar" style="width:40px;height:40px;font-size:20px">🧍‍♀️</div>
-      <h3 style="margin:0">P1　林思妤 · 怕被審的新手</h3>
-    </div>
-    <ul class="log">
-      <li class="pos"><span class="dot"></span><span class="step">T1 首頁 <span class="emo p">＋</span></span>
-        <p class="think"><span class="say">「『找到那隻跟你的生活合拍的貓』——喔，是幫我找，不是叫我先證明自己。主鈕寫『開始配對』不是『申請認養』，我沒有戒心。」</span> 5 秒內判定「這裡站在我這邊」，願意往下。</p></li>
-      <li class="pos"><span class="dot"></span><span class="step">T2 配對測驗 <span class="emo p">＋</span></span>
-        <p class="think"><span class="say">「一次只問一題，還有貓掌進度說『還差 2 題』。問到租屋，它說『先確認過房東，之後的旅程會順很多』——是提醒欸，不是在盤問我。每題都能跳過，我鬆一口氣。」</span> 洞察 1·6 的地雷被拆掉。</p></li>
-      <li class="pos"><span class="dot"></span><span class="step">T3 檔案 <span class="emo p">＋</span></span>
-        <p class="think"><span class="say">「健康護照把疫苗結紮都列好了，還沒打的寫『即將完成』不是紅字警告。需求卡是『我需要窗戶有防護網』，附『怎麼做』跟採買價格——原來門窗防護這麼簡單，我以為很難。」</span> 新手焦慮（洞察 5）下降。</p></li>
-      <li class="neg"><span class="dot"></span><span class="step">T4 聯繫中途 <span class="emo n">－</span></span>
-        <p class="think"><span class="say">「它幫我把測驗答案寫成一段自我介紹草稿，這超貼心。但我第一次養，會不會被中途打槍？」</span> 卡點：草稿送出前缺一句「中途看的是你願不願意學，不是你懂多少」的定心話。<b>（改進點 A）</b></p></li>
-      <li class="pos"><span class="dot"></span><span class="step">T5 認養之後 <span class="emo p">＋</span></span>
-        <p class="think"><span class="say">「看到『無責退回：任何原因養不了，貓永遠可以回家，我們不追問』，我反而更敢養了——有退路，我才敢承諾。」</span> 洞察 7 命中。</p></li>
-    </ul>
-    <p class="note" style="margin-top:14px"><b>P1 結論：</b>五個任務四正一負，唯一阻力在「送出前的自我懷疑」。這是新手轉換率的最後一哩，建議在草稿頁補一句除罪化文案。</p>
-  </div>
+  <h3>4a. v1 的三個 P0 卡點——已修復，實測確認 ✅</h3>
+  <ul class="clean">
+    <li>P1 草稿自我懷疑 → 草稿上方已有「中途看的是你願不願意學，不是你懂多少。」</li>
+    <li>P3 摘要留底焦慮 → 送出鈕上方已有「這段摘要只寄給（中途名），不會公開、不進相簿。」</li>
+    <li>P2 怕一次定終身 → 結果卡 CTA 下已有「先見面、可試相處，不用一次決定。」</li>
+    <li>加碼項也在：旅程末無責退回入口、被婉拒轉介雙向回饋、相簿導流。</li>
+  </ul>
 
-  <!-- P2 -->
-  <div class="card" style="margin-bottom:22px">
-    <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px">
-      <div class="avatar" style="width:40px;height:40px;font-size:20px">🧑‍💻</div>
-      <h3 style="margin:0">P2　陳柏諺 · 找共感的獨居者</h3>
-    </div>
-    <ul class="log">
-      <li class="pos"><span class="dot"></span><span class="step">T1 首頁 <span class="emo p">＋</span></span>
-        <p class="think"><span class="say">「副鈕『先逛逛貓咪』給了我不想被引導的空間。我先看貓。」</span> 尊重了他被推銷過的戒心（洞察 4）。</p></li>
-      <li class="pos"><span class="dot"></span><span class="step">T3→T2 檔案先行 <span class="emo p">＋</span></span>
-        <p class="think"><span class="say">「阿灰的介紹是第一人稱：『我是慢熟的觀察家，給我一週，我會睡在你的鍵盤上。』——這不是規格表，這是一個像我的傢伙。我是為了這種描述來的。」</span> 共感型（洞察 2）被精準接住。</p></li>
-      <li class="pos"><span class="dot"></span><span class="step">T2 配對理由 <span class="emo p">＋</span></span>
-        <p class="think"><span class="say">「配對結果不是冷冰冰的百分比，理由寫『你說平日在家時間短——阿灰是獨處高手』，它真的用了我的答案。上次那種條件配對從不解釋為什麼。」</span> 洞察 2·4 同時滿足。</p></li>
-      <li class="neg"><span class="dot"></span><span class="step">T3 退養陰影 <span class="emo n">－</span></span>
-        <p class="think"><span class="say">「我上次就是合不來才退養的。這次怎麼知道會不一樣？」</span> 卡點：認養旅程有「試相處」階段，但首頁與結果頁沒把「可以先試、不用一次定終身」講出來，錯過了安撫退養陰影的機會。<b>（改進點 B）</b></p></li>
-      <li class="pos"><span class="dot"></span><span class="step">T5 承諾日 <span class="emo p">＋</span></span>
-        <p class="think"><span class="say">「旅程四階段『相識→見面→試相處→承諾日』——原來有試相處緩衝，我安心多了。最終決定在中途手上，這句『他們的把關是給你和貓的保障』我認同。」</span></p></li>
-    </ul>
-    <p class="note" style="margin-top:14px"><b>P2 結論：</b>個性敘事與可解釋配對是他留下來的主因。唯一阻力是「試相處」這個關鍵安撫點藏太深，建議前移到配對結果頁曝光。</p>
-  </div>
+  <h3>4b. v2 新發現的卡點（依嚴重度排序）</h3>
+  <ol class="log" style="margin-top:16px">
+    <li class="neg"><span class="dot"></span>
+      <p class="step">P4 · 嚴重 <span class="emo n">－阻力</span></p>
+      <p class="think"><span class="say">「這隻貓在哪個縣市？」</span>貓卡只有品種・年齡・性別；<b>地區藏在檔案頁中途介紹的一句話裡</b>。三位受訪者全都把地區當前置條件（A 只送雙北因為要家訪）。住高雄的 P4 要點進兩層才發現貓在台北——最壞情況是聊完才發現。</p></li>
+    <li class="neg"><span class="dot"></span>
+      <p class="step">P4 · 嚴重 <span class="emo n">－阻力</span></p>
+      <p class="think"><span class="say">「牠親不親狗？我家有狗。」</span>親貓／親狗／親幼兒<b>沒有結構化標示</b>，只存在於第一人稱故事的字裡行間。P4 不會為了確認一個硬條件讀完六篇散文。<b>故事負責定情，事實列負責不流失——兩者不互斥。</b>（B 的發文格式證詞）</p></li>
+    <li class="neg"><span class="dot"></span>
+      <p class="step">P2 / P4 · 中 <span class="emo n">－缺口</span></p>
+      <p class="think"><span class="say">「兩隻一起？沒看到這個選項。」</span><b>雙貓不拆送完全沒有被建模</b>：測驗沒有「一隻還是兩隻」題、檔案沒有「我們是一起的」標記，A 的社會化論述（新手養兩隻反而輕鬆）也沒被轉成賣點。這是中途端最難送的真實庫存。</p></li>
+    <li class=""><span class="dot"></span>
+      <p class="step">P3 · 低 <span class="emo z">○中性</span></p>
+      <p class="think">回報提醒<b>沒有時間衰減</b>。C：「過了一年兩年就不太回報」是常態；對第 24 個月的認養人套用第 1 個月的提醒邏輯，只會累積「還在被追蹤」的反感。</p></li>
+    <li class=""><span class="dot"></span>
+      <p class="step">規模化預警 · 低 <span class="emo z">○前瞻</span></p>
+      <p class="think">列表在 60 隻（C 的常態容量）時會失效：沒有篩選器時，測驗變成唯一導航——而 P4 型正是最抗拒測驗的人。</p></li>
+  </ol>
 
-  <!-- P3 -->
-  <div class="card">
-    <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px">
-      <div class="avatar" style="width:40px;height:40px;font-size:20px">🧑</div>
-      <h3 style="margin:0">P3　黃士豪 · 重隱私的抗拒者</h3>
-    </div>
-    <ul class="log">
-      <li class="zero"><span class="dot" style="border-color:var(--faint)"></span><span class="step">T1–T2 <span class="emo z">○</span></span>
-        <p class="think"><span class="say">「配對還行，沒叫我登入、沒要我手機號，可以。」</span> 中性通過，沒有觸發防衛。</p></li>
-      <li class="neg"><span class="dot"></span><span class="step">T4 送出草稿 <span class="emo n">－</span></span>
-        <p class="think"><span class="say">「草稿裡自動放了我的生活樣態摘要，要寄給中途。等一下，這些會被存起來嗎？我最怕資料被留底。」</span> 卡點：草稿是「確認後才送出」的好設計，但沒告訴他「摘要只給這位中途、不公開」。隱私敏感者（洞察 3）在此遲疑。<b>（改進點 C）</b></p></li>
-      <li class="pos"><span class="dot"></span><span class="step">T5 曬貓回報 <span class="emo p">＋</span></span>
-        <p class="think"><span class="say">「回報居然預設『只給中途看』，還特別標『發問不會影響任何紀錄』。提醒是系統發的、像日曆通知，不是人來催我。這是我看過第一個沒有監控感的回報設計。」</span> 直接命中洞察 3——這正是受訪者 D 想要的數位工具。</p></li>
-      <li class="pos"><span class="dot"></span><span class="step">T5 抽獎 <span class="emo p">＋</span></span>
-        <p class="think"><span class="say">「曬貓有抽獎券，把『被要求回報』變成『我想曬』。心理上完全不一樣。」</span></p></li>
-    </ul>
-    <p class="note" style="margin-top:14px"><b>P3 結論：</b>回報系統的去人化＋預設私密＋遊戲化，正是他願意留任的關鍵。唯一阻力是「送出摘要」缺一個隱私說明——這對隱私敏感者是成敗一線。</p>
+  <h3>4c. 各 persona 一句話結論</h3>
+  <div class="grid g2">
+    <div class="card tint"><h4>P1 <span class="emo p">＋通過</span></h4><p style="font-size:14px;margin:6px 0 0">全程順暢，除罪化文案接住了送出前的猶豫。剩餘風險是真實世界的（房東實際不同意），不是介面的。</p></div>
+    <div class="card tint"><h4>P2 <span class="emo p">＋通過</span></h4><p style="font-size:14px;margin:6px 0 0">個性敘事＋可解釋配對理由仍是留下主因；「試相處」前移後，旅程頁成為安撫閉環。</p></div>
+    <div class="card tint"><h4>P3 <span class="emo p">＋條件通過</span></h4><p style="font-size:14px;margin:6px 0 0">預設私密＋系統提醒＋隱私說明把他從「抗拒者」轉為「條件性配合者」。長期留任取決於衰減設計。</p></div>
+    <div class="card tint"><h4>P4 <span class="emo n">－在貓卡層流失</span></h4><p style="font-size:14px;margin:6px 0 0">她不做測驗、不讀長故事，需要 5 秒掃到「台中・親狗・親幼兒」。目前的網站對她是一面漂亮但不透明的牆。</p></div>
   </div>
 </div></section>
 
 <!-- ============ 5 ============ -->
 <section id="s5"><div class="wrap">
   <p class="kicker">Part 5 · 核心產出</p>
-  <h2><span class="n">05</span>功能對「領養率」的貢獻度評分</h2>
-  <p class="sub">把網站現有功能，依五個對領養率有因果關係的維度評分（各 1–5 分，滿分 25）。維度直接來自訪談的兩個閥門：<b>「有多少人開始」</b>與<b>「送出去會不會退回」</b>。</p>
+  <h2><span class="n">05</span>功能對「領養率」的貢獻度評分（v2 框架）</h2>
+  <p class="sub">v1 用五維等權（滿分 25）；等權讓「對漏斗最窄處的作用」和「錦上添花」拿一樣的分。v2 改為四軸（各 0–5，滿分 20），並補上 v1 缺失的<b>供給端</b>。</p>
 
   <div class="grid g2" style="margin-bottom:26px">
     <div class="card tint">
-      <h4>評分維度（各 5 分）</h4>
+      <h4>四個評分軸（各 5 分）</h4>
       <ul class="clean" style="margin-bottom:0">
-        <li><b>A 消除被審查感</b>　降低前端心理流失（洞察 1）</li>
-        <li><b>B 促進共感配對</b>　提高配對品質、降退養（洞察 2）</li>
-        <li><b>C 降低操作摩擦</b>　認知負荷、步驟數（洞察 4·5）</li>
-        <li><b>D 建立信任</b>　可驗證的透明訊號（洞察 8）</li>
-        <li><b>E 降低退養／留任</b>　售後與退路（洞察 3·7）</li>
+        <li><b>C 轉換力</b>　把猶豫者推進到「送出意向／見面」（漏斗最窄處）</li>
+        <li><b>R 留任力</b>　降低退養率（退養會回頭摧毀供給端信任）</li>
+        <li><b>S 供給力</b>　讓中途願意採用、願意更快放行 <span class="pill">v1 缺失的軸</span></li>
+        <li><b>E 證據強度</b>　訪談對此機制的直接支持度</li>
       </ul>
     </div>
     <div class="card tint">
-      <h4>怎麼讀分數</h4>
-      <p style="margin-bottom:8px">分數＝該功能對「提高最終領養率」的估計貢獻，不是它做得多精緻。一個功能可以很漂亮但對領養率貢獻低（如帳本），也可以樸素但關鍵（如無責退回）。</p>
-      <p style="margin-bottom:0" class="pill">總分排序＝優先投資順序的參考</p>
+      <h4>為什麼需要 S 軸</h4>
+      <p style="margin-bottom:8px;font-size:14.5px">C 的判詞：「所有認養平台只做到擴散」→ 所以中途不用。<b>沒有中途採用的平台，移動不了任何一隻貓</b>；而放行速度掌握在 A 型（層層關卡派）中途手裡。v1 把領養率當成純認養人體驗問題，是它最大的系統性偏差。</p>
+      <p style="margin-bottom:0" class="pill">領養率 = 敢開始 × 願放行 × 留得下</p>
     </div>
   </div>
 
-  <!-- Scored features -->
   <div class="grid" id="scored">
-    <!-- 1 -->
     <div class="card">
-      <div class="scorehead"><h3 style="margin:0"><span class="rank">1</span>生活樣態配對測驗（一屏一題·可跳過·貓掌進度）</h3><span class="total">23 / 25</span></div>
+      <div class="scorehead"><h3 style="margin:0"><span class="rank">1</span>生活樣態配對測驗（並列第一）</h3><span class="total">17 / 20</span></div>
       <div class="grid g2" style="margin-top:12px">
         <div>
-          <div class="meter"><div><div class="lab">A 消除被審查感</div><div class="bar"><span style="width:100%"></span></div></div><span class="val">5</span></div>
-          <div class="meter"><div><div class="lab">B 促進共感配對</div><div class="bar"><span style="width:80%"></span></div></div><span class="val">4</span></div>
-          <div class="meter"><div><div class="lab">C 降低操作摩擦</div><div class="bar"><span style="width:100%"></span></div></div><span class="val">5</span></div>
+          <div class="meter"><div><div class="lab">C 轉換力</div><div class="bar"><span style="width:100%"></span></div></div><span class="val">5</span></div>
+          <div class="meter"><div><div class="lab">R 留任力</div><div class="bar"><span style="width:80%"></span></div></div><span class="val">4</span></div>
         </div>
         <div>
-          <div class="meter"><div><div class="lab">D 建立信任</div><div class="bar"><span style="width:60%"></span></div></div><span class="val">3</span></div>
-          <div class="meter"><div><div class="lab">E 降低退養／留任</div><div class="bar"><span style="width:100%"></span></div></div><span class="val">5</span></div>
+          <div class="meter"><div><div class="lab">S 供給力</div><div class="bar"><span style="width:60%"></span></div></div><span class="val">3</span></div>
+          <div class="meter"><div><div class="lab">E 證據強度</div><div class="bar"><span style="width:100%"></span></div></div><span class="val">5</span></div>
         </div>
       </div>
-      <p style="margin:12px 0 0"><b>直接對應訪談最痛的閥門</b>——把「問卷一出去人就不見」的長表單，換成利己框架的對話。三位 persona 全數順利通過，是全站對領養率貢獻最高的單一功能。<span class="pill">待改：無</span></p>
+      <p style="margin:12px 0 0"><b>開漏斗之門。</b>三方一致的表單流失證據＋C 的「生活樣態」方法論原文。v2 補一個 v1 沒看到的機制：個性配對會把注意力重新分配到照片不討喜的貓（A：玳瑁與黑貓難送）——<b>配對是庫存流動工具，不只是體驗</b>。<span class="pill">v1：23/25 · 第 1</span></p>
     </div>
 
-    <!-- 2 -->
     <div class="card">
-      <div class="scorehead"><h3 style="margin:0"><span class="rank">2</span>個性敘事檔案（第一人稱故事優先）</h3><span class="total">22 / 25</span></div>
+      <div class="scorehead"><h3 style="margin:0"><span class="rank">1</span>個性敘事檔案（並列第一）</h3><span class="total">17 / 20</span></div>
       <div class="grid g2" style="margin-top:12px">
         <div>
-          <div class="meter"><div><div class="lab">A 消除被審查感</div><div class="bar"><span style="width:80%"></span></div></div><span class="val">4</span></div>
-          <div class="meter"><div><div class="lab">B 促進共感配對</div><div class="bar"><span style="width:100%"></span></div></div><span class="val">5</span></div>
-          <div class="meter"><div><div class="lab">C 降低操作摩擦</div><div class="bar"><span style="width:80%"></span></div></div><span class="val">4</span></div>
+          <div class="meter"><div><div class="lab">C 轉換力</div><div class="bar"><span style="width:100%"></span></div></div><span class="val">5</span></div>
+          <div class="meter"><div><div class="lab">R 留任力</div><div class="bar"><span style="width:100%"></span></div></div><span class="val">5</span></div>
         </div>
         <div>
-          <div class="meter"><div><div class="lab">D 建立信任</div><div class="bar"><span style="width:80%"></span></div></div><span class="val">4</span></div>
-          <div class="meter"><div><div class="lab">E 降低退養／留任</div><div class="bar"><span style="width:100%"></span></div></div><span class="val">5</span></div>
+          <div class="meter"><div><div class="lab">S 供給力</div><div class="bar"><span style="width:40%"></span></div></div><span class="val">2</span></div>
+          <div class="meter"><div><div class="lab">E 證據強度</div><div class="bar"><span style="width:100%"></span></div></div><span class="val">5</span></div>
         </div>
       </div>
-      <p style="margin:12px 0 0">受訪者 C 的「把貓寫成一個人」被完整落地。P2 因此留下。<b>直接對應退養率最低的「共感型認養」。</b><span class="pill">待改：改進點 B — 把「試相處」安撫點前移</span></p>
+      <p style="margin:12px 0 0"><b>定情機制，全語料唯一親證因果</b>（敘事→共感→退養小很多）。S 只有 2 分是誠實的：第一人稱故事對中途是新增寫作成本（C 是作家型；A/B 的貼文簡單得多），需要代寫模板才能規模化。測驗開門、敘事定情——不同漏斗段的第一名，v1 硬分高下反而失真。<span class="pill">v1：22/25 · 第 2</span></p>
     </div>
 
-    <!-- 3 -->
     <div class="card">
-      <div class="scorehead"><h3 style="margin:0"><span class="rank">3</span>曬貓回報系統（中性提醒·預設私密·抽獎）</h3><span class="total">21 / 25</span></div>
+      <div class="scorehead"><h3 style="margin:0"><span class="rank">3</span>跟中途聊聊・預填草稿（含 P0 文案）</h3><span class="total">15 / 20</span></div>
       <div class="grid g2" style="margin-top:12px">
         <div>
-          <div class="meter"><div><div class="lab">A 消除被審查感</div><div class="bar"><span style="width:100%"></span></div></div><span class="val">5</span></div>
-          <div class="meter"><div><div class="lab">B 促進共感配對</div><div class="bar"><span style="width:40%"></span></div></div><span class="val">2</span></div>
-          <div class="meter"><div><div class="lab">C 降低操作摩擦</div><div class="bar"><span style="width:80%"></span></div></div><span class="val">4</span></div>
+          <div class="meter"><div><div class="lab">C 轉換力</div><div class="bar"><span style="width:100%"></span></div></div><span class="val">5</span></div>
+          <div class="meter"><div><div class="lab">R 留任力</div><div class="bar"><span style="width:40%"></span></div></div><span class="val">2</span></div>
         </div>
         <div>
-          <div class="meter"><div><div class="lab">D 建立信任</div><div class="bar"><span style="width:100%"></span></div></div><span class="val">5</span></div>
-          <div class="meter"><div><div class="lab">E 降低退養／留任</div><div class="bar"><span style="width:100%"></span></div></div><span class="val">5</span></div>
+          <div class="meter"><div><div class="lab">S 供給力</div><div class="bar"><span style="width:80%"></span></div></div><span class="val">4</span></div>
+          <div class="meter"><div><div class="lab">E 證據強度</div><div class="bar"><span style="width:80%"></span></div></div><span class="val">4</span></div>
         </div>
       </div>
-      <p style="margin:12px 0 0">幾乎是受訪者 D「想開發卻還沒做出來」的數位工具的成品。P3 從抗拒轉為願意留任。對「留住成功認養、社會證明反哺轉換」貢獻極高。<span class="pill">待改：無（維度 B 本非其職責）</span></p>
+      <p style="margin:12px 0 0"><b>上升（v1 第 5）。</b>它坐在漏斗最窄的一格，且草稿欄位幾乎 1:1 對應 A/B 的審核問題清單——中途收到的是「已經自我介紹好的人」，放行更快。B 的「整篇貼給我→趕快進下一流程」就是此功能的人肉原型。<span class="pill">v1：19/25 · 第 5</span></p>
     </div>
 
-    <!-- 4 -->
     <div class="card">
-      <div class="scorehead"><h3 style="margin:0"><span class="rank">4</span>無責退回通道</h3><span class="total">20 / 25</span></div>
+      <div class="scorehead"><h3 style="margin:0"><span class="rank">3</span>曬貓回報系統（去人化・預設私密・抽獎）</h3><span class="total">15 / 20</span></div>
       <div class="grid g2" style="margin-top:12px">
         <div>
-          <div class="meter"><div><div class="lab">A 消除被審查感</div><div class="bar"><span style="width:100%"></span></div></div><span class="val">5</span></div>
-          <div class="meter"><div><div class="lab">B 促進共感配對</div><div class="bar"><span style="width:40%"></span></div></div><span class="val">2</span></div>
-          <div class="meter"><div><div class="lab">C 降低操作摩擦</div><div class="bar"><span style="width:80%"></span></div></div><span class="val">4</span></div>
+          <div class="meter"><div><div class="lab">C 轉換力</div><div class="bar"><span style="width:20%"></span></div></div><span class="val">1</span></div>
+          <div class="meter"><div><div class="lab">R 留任力</div><div class="bar"><span style="width:80%"></span></div></div><span class="val">4</span></div>
         </div>
         <div>
-          <div class="meter"><div><div class="lab">D 建立信任</div><div class="bar"><span style="width:80%"></span></div></div><span class="val">4</span></div>
-          <div class="meter"><div><div class="lab">E 降低退養／留任</div><div class="bar"><span style="width:100%"></span></div></div><span class="val">5</span></div>
+          <div class="meter"><div><div class="lab">S 供給力</div><div class="bar"><span style="width:100%"></span></div></div><span class="val">5</span></div>
+          <div class="meter"><div><div class="lab">E 證據強度</div><div class="bar"><span style="width:100%"></span></div></div><span class="val">5</span></div>
         </div>
       </div>
-      <p style="margin:12px 0 0">看似售後功能，卻是 P1「有退路才敢承諾」的<b>轉換臨門一腳</b>。同時解掉受訪者 A「怕被罵而隱瞞退養」的最壞情況。樸素但高價值的典範。<span class="pill">待改：入口可再靠近承諾決策點</span></p>
+      <p style="margin:12px 0 0"><b>重新定性：供給端基礎設施。</b>它對認養當下的轉換幾乎沒作用，真正角色是讓中途採用平台的理由——C 自己就在開發同款工具。是間接但關鍵的領養率槓桿。<span class="pill">v1：21/25 · 第 3</span></p>
     </div>
 
-    <!-- 5 -->
     <div class="card">
-      <div class="scorehead"><h3 style="margin:0"><span class="rank">5</span>跟中途聊聊 · 預填自我介紹草稿</h3><span class="total">19 / 25</span></div>
+      <div class="scorehead"><h3 style="margin:0"><span class="rank">5</span>無責退回通道</h3><span class="total">14 / 20</span></div>
       <div class="grid g2" style="margin-top:12px">
         <div>
-          <div class="meter"><div><div class="lab">A 消除被審查感</div><div class="bar"><span style="width:80%"></span></div></div><span class="val">4</span></div>
-          <div class="meter"><div><div class="lab">B 促進共感配對</div><div class="bar"><span style="width:60%"></span></div></div><span class="val">3</span></div>
-          <div class="meter"><div><div class="lab">C 降低操作摩擦</div><div class="bar"><span style="width:100%"></span></div></div><span class="val">5</span></div>
+          <div class="meter"><div><div class="lab">C 轉換力</div><div class="bar"><span style="width:60%"></span></div></div><span class="val">3</span></div>
+          <div class="meter"><div><div class="lab">R 留任力</div><div class="bar"><span style="width:80%"></span></div></div><span class="val">4</span></div>
         </div>
         <div>
-          <div class="meter"><div><div class="lab">D 建立信任</div><div class="bar"><span style="width:80%"></span></div></div><span class="val">4</span></div>
-          <div class="meter"><div><div class="lab">E 降低退養／留任</div><div class="bar"><span style="width:60%"></span></div></div><span class="val">3</span></div>
+          <div class="meter"><div><div class="lab">S 供給力</div><div class="bar"><span style="width:60%"></span></div></div><span class="val">3</span></div>
+          <div class="meter"><div><div class="lab">E 證據強度</div><div class="bar"><span style="width:80%"></span></div></div><span class="val">4</span></div>
         </div>
       </div>
-      <p style="margin:12px 0 0">把「整理成一大篇貼給中途」自動化（洞察 4），還原成「自我介紹」而非「填申請」。但這裡同時卡住 P1（怕被打槍）與 P3（怕留底），是<b>改進點 A＋C 的交會處</b>，投資報酬率最高的一次微調。<span class="pill">待改：補除罪話術＋隱私說明</span></p>
+      <p style="margin:12px 0 0">證據扎實（A 的無條件收回實踐＋B 的「消失的貓」反例），但它是<b>保險而非引擎</b>——作用在少數人的關鍵時刻，觸及廣度有限。<span class="pill">v1：20/25 · 第 4</span></p>
     </div>
 
-    <!-- 6 -->
     <div class="card">
-      <div class="scorehead"><h3 style="margin:0"><span class="rank">6</span>認養旅程四階段（含「最終決定在中途」正面解釋）</h3><span class="total">18 / 25</span></div>
+      <div class="scorehead"><h3 style="margin:0"><span class="rank">5</span>健康護照＋需求卡</h3><span class="total">14 / 20</span></div>
       <div class="grid g2" style="margin-top:12px">
         <div>
-          <div class="meter"><div><div class="lab">A 消除被審查感</div><div class="bar"><span style="width:80%"></span></div></div><span class="val">4</span></div>
-          <div class="meter"><div><div class="lab">B 促進共感配對</div><div class="bar"><span style="width:60%"></span></div></div><span class="val">3</span></div>
-          <div class="meter"><div><div class="lab">C 降低操作摩擦</div><div class="bar"><span style="width:60%"></span></div></div><span class="val">3</span></div>
+          <div class="meter"><div><div class="lab">C 轉換力</div><div class="bar"><span style="width:80%"></span></div></div><span class="val">4</span></div>
+          <div class="meter"><div><div class="lab">R 留任力</div><div class="bar"><span style="width:60%"></span></div></div><span class="val">3</span></div>
         </div>
         <div>
-          <div class="meter"><div><div class="lab">D 建立信任</div><div class="bar"><span style="width:80%"></span></div></div><span class="val">4</span></div>
-          <div class="meter"><div><div class="lab">E 降低退養／留任</div><div class="bar"><span style="width:80%"></span></div></div><span class="val">4</span></div>
+          <div class="meter"><div><div class="lab">S 供給力</div><div class="bar"><span style="width:60%"></span></div></div><span class="val">3</span></div>
+          <div class="meter"><div><div class="lab">E 證據強度</div><div class="bar"><span style="width:80%"></span></div></div><span class="val">4</span></div>
         </div>
       </div>
-      <p style="margin:12px 0 0">「試相處」階段是 P2 退養陰影的解藥，把中途的把關權從「守門」重框為「保障」。可惜位置偏後，安撫來得太晚。<span class="pill">待改：改進點 B — 前移曝光</span></p>
+      <p style="margin:12px 0 0"><b>上升（v1 第 7）。</b>v1 把它當「信任建立」低估了：B 的證詞說明資訊完整度直接防止無聲流失，護照格式（「打了幾劑上面都會寫」）就是 B 的原話。補上地區與親善標示後還會更高。<span class="pill">v1：17/25 · 第 7</span></p>
     </div>
 
-    <!-- 7 -->
     <div class="card">
-      <div class="scorehead"><h3 style="margin:0"><span class="rank">7</span>健康護照時間軸　＆　「這隻貓的需求」卡</h3><span class="total">17 / 25</span></div>
+      <div class="scorehead"><h3 style="margin:0"><span class="rank">5</span>中途後台（兩檔位提醒・轉介）</h3><span class="total">14 / 20</span></div>
       <div class="grid g2" style="margin-top:12px">
         <div>
-          <div class="meter"><div><div class="lab">A 消除被審查感</div><div class="bar"><span style="width:60%"></span></div></div><span class="val">3</span></div>
-          <div class="meter"><div><div class="lab">B 促進共感配對</div><div class="bar"><span style="width:40%"></span></div></div><span class="val">2</span></div>
-          <div class="meter"><div><div class="lab">C 降低操作摩擦</div><div class="bar"><span style="width:80%"></span></div></div><span class="val">4</span></div>
+          <div class="meter"><div><div class="lab">C 轉換力</div><div class="bar"><span style="width:40%"></span></div></div><span class="val">2</span></div>
+          <div class="meter"><div><div class="lab">R 留任力</div><div class="bar"><span style="width:60%"></span></div></div><span class="val">3</span></div>
         </div>
         <div>
-          <div class="meter"><div><div class="lab">D 建立信任</div><div class="bar"><span style="width:100%"></span></div></div><span class="val">5</span></div>
-          <div class="meter"><div><div class="lab">E 降低退養／留任</div><div class="bar"><span style="width:60%"></span></div></div><span class="val">3</span></div>
+          <div class="meter"><div><div class="lab">S 供給力</div><div class="bar"><span style="width:100%"></span></div></div><span class="val">5</span></div>
+          <div class="meter"><div><div class="lab">E 證據強度</div><div class="bar"><span style="width:80%"></span></div></div><span class="val">4</span></div>
         </div>
       </div>
-      <p style="margin:12px 0 0">呼應受訪者 A「每隻貓都有一本護照」。以貓為主詞的需求卡＋採買參考，直接降低 P1 的新手焦慮（門窗防護原來很簡單）。信任維度滿分。<span class="pill">待改：無</span></p>
+      <p style="margin:12px 0 0"><b>上升（v1 第 8）。</b>後台是說服 A 型中途進場的唯一入口——它不要求她放寬任何標準，只把她已經在做的事變便宜（催報自動化、婉拒轉介化）。<span class="pill">v1：16/25 · 第 8</span></p>
     </div>
 
-    <!-- 8 -->
     <div class="card">
-      <div class="scorehead"><h3 style="margin:0"><span class="rank">8</span>中途後台（兩檔位提醒·系統轉介·減負框架）</h3><span class="total">16 / 25</span></div>
+      <div class="scorehead"><h3 style="margin:0"><span class="rank">8</span>認養旅程四階段</h3><span class="total">12 / 20</span></div>
       <div class="grid g2" style="margin-top:12px">
         <div>
-          <div class="meter"><div><div class="lab">A 消除被審查感</div><div class="bar"><span style="width:80%"></span></div></div><span class="val">4</span></div>
-          <div class="meter"><div><div class="lab">B 促進共感配對</div><div class="bar"><span style="width:60%"></span></div></div><span class="val">3</span></div>
-          <div class="meter"><div><div class="lab">C 降低操作摩擦</div><div class="bar"><span style="width:60%"></span></div></div><span class="val">3</span></div>
+          <div class="meter"><div><div class="lab">C 轉換力</div><div class="bar"><span style="width:60%"></span></div></div><span class="val">3</span></div>
+          <div class="meter"><div><div class="lab">R 留任力</div><div class="bar"><span style="width:60%"></span></div></div><span class="val">3</span></div>
         </div>
         <div>
-          <div class="meter"><div><div class="lab">D 建立信任</div><div class="bar"><span style="width:40%"></span></div></div><span class="val">2</span></div>
-          <div class="meter"><div><div class="lab">E 降低退養／留任</div><div class="bar"><span style="width:80%"></span></div></div><span class="val">4</span></div>
+          <div class="meter"><div><div class="lab">S 供給力</div><div class="bar"><span style="width:60%"></span></div></div><span class="val">3</span></div>
+          <div class="meter"><div><div class="lab">E 證據強度</div><div class="bar"><span style="width:60%"></span></div></div><span class="val">3</span></div>
         </div>
       </div>
-      <p style="margin:12px 0 0">面向供給端（中途），間接影響領養率：解決受訪者 A「追照片很煩」、C「一個人維持 60 分就用盡力氣」。「不合適由系統轉介，不通知原因」化解對立。認養人不直接感受，故對領養率為間接貢獻。<span class="pill">待改：把轉介結果回饋到認養人端</span></p>
+      <p style="margin:12px 0 0">期望管理有價值（試相處＝P2 解藥、把關正面化＝A 型中途的面子），但它是說明頁而非互動機制。<span class="pill">v1：18/25 · 第 6</span></p>
     </div>
 
-    <!-- 9 -->
     <div class="card">
-      <div class="scorehead"><h3 style="margin:0"><span class="rank">9</span>成長相簿（脫敏社會證明）</h3><span class="total">15 / 25</span></div>
+      <div class="scorehead"><h3 style="margin:0"><span class="rank">9</span>成長相簿</h3><span class="total">10 / 20</span></div>
       <div class="grid g2" style="margin-top:12px">
         <div>
-          <div class="meter"><div><div class="lab">A 消除被審查感</div><div class="bar"><span style="width:60%"></span></div></div><span class="val">3</span></div>
-          <div class="meter"><div><div class="lab">B 促進共感配對</div><div class="bar"><span style="width:60%"></span></div></div><span class="val">3</span></div>
-          <div class="meter"><div><div class="lab">C 降低操作摩擦</div><div class="bar"><span style="width:60%"></span></div></div><span class="val">3</span></div>
+          <div class="meter"><div><div class="lab">C 轉換力</div><div class="bar"><span style="width:60%"></span></div></div><span class="val">3</span></div>
+          <div class="meter"><div><div class="lab">R 留任力</div><div class="bar"><span style="width:40%"></span></div></div><span class="val">2</span></div>
         </div>
         <div>
-          <div class="meter"><div><div class="lab">D 建立信任</div><div class="bar"><span style="width:80%"></span></div></div><span class="val">4</span></div>
-          <div class="meter"><div><div class="lab">E 降低退養／留任</div><div class="bar"><span style="width:40%"></span></div></div><span class="val">2</span></div>
+          <div class="meter"><div><div class="lab">S 供給力</div><div class="bar"><span style="width:40%"></span></div></div><span class="val">2</span></div>
+          <div class="meter"><div><div class="lab">E 證據強度</div><div class="bar"><span style="width:60%"></span></div></div><span class="val">3</span></div>
         </div>
       </div>
-      <p style="margin:12px 0 0">「回家第 N 個月」的近況牆提供社會證明，暗示「別人養得起來、也養得開心」。三位 persona 皆為輔助性瀏覽，未成為決策關鍵，但有效軟化整體氛圍。<span class="pill">待改：可連結到對應可認養的同型貓</span></p>
+      <p style="margin:12px 0 0">社會證明＋已加導流。缺的那一塊：A 的認養人群組證明<b>校友社群能產生重複認養與轉介</b>，相簿目前只是單向櫥窗。<span class="pill">v1：15/25 · 第 9</span></p>
     </div>
 
-    <!-- 10 -->
     <div class="card">
-      <div class="scorehead"><h3 style="margin:0"><span class="rank">10</span>透明帳本（時報時銷）</h3><span class="total">12 / 25</span></div>
+      <div class="scorehead"><h3 style="margin:0"><span class="rank">10</span>透明帳本（時報時銷）</h3><span class="total">8 / 20</span></div>
       <div class="grid g2" style="margin-top:12px">
         <div>
-          <div class="meter"><div><div class="lab">A 消除被審查感</div><div class="bar"><span style="width:40%"></span></div></div><span class="val">2</span></div>
-          <div class="meter"><div><div class="lab">B 促進共感配對</div><div class="bar"><span style="width:20%"></span></div></div><span class="val">1</span></div>
-          <div class="meter"><div><div class="lab">C 降低操作摩擦</div><div class="bar"><span style="width:60%"></span></div></div><span class="val">3</span></div>
+          <div class="meter"><div><div class="lab">C 轉換力</div><div class="bar"><span style="width:20%"></span></div></div><span class="val">1</span></div>
+          <div class="meter"><div><div class="lab">R 留任力</div><div class="bar"><span style="width:20%"></span></div></div><span class="val">1</span></div>
         </div>
         <div>
-          <div class="meter"><div><div class="lab">D 建立信任</div><div class="bar"><span style="width:100%"></span></div></div><span class="val">5</span></div>
-          <div class="meter"><div><div class="lab">E 降低退養／留任</div><div class="bar"><span style="width:20%"></span></div></div><span class="val">1</span></div>
+          <div class="meter"><div><div class="lab">S 供給力</div><div class="bar"><span style="width:60%"></span></div></div><span class="val">3</span></div>
+          <div class="meter"><div><div class="lab">E 證據強度</div><div class="bar"><span style="width:60%"></span></div></div><span class="val">3</span></div>
         </div>
       </div>
-      <p style="margin:12px 0 0">忠實還原受訪者 A 的「時報時銷」，信任維度滿分。但對「當下要不要領這隻貓」的決策幾乎不介入——三位 persona 沒人在決策時打開它。<b>是品牌公信力資產，不是領養率槓桿。</b><span class="pill">定位：長期信任，非轉換工具</span></p>
+      <p style="margin:12px 0 0">v1 的定性正確：服務長期信任而非本次轉換。v2 補一個註腳：B 因堅持時報時銷而被同業攻擊——公開帳本在中途圈內是<b>稀缺的差異化信號</b>，S 軸價值高於 C 軸。<span class="pill">v1：12/25 · 第 10</span></p>
     </div>
   </div>
 
-  <div class="note" style="margin-top:24px">
-    <b>評分總覽：</b>前四名（配對測驗 23、個性檔案 22、曬貓回報 21、無責退回 20）全部集中在訪談指出的兩個閥門上——<b>鬆開前端審查感、守住後端不退養</b>。而做得很用心的透明帳本只有 12 分，不是因為做得差，而是它服務的是「長期信任」而非「這次領養」。這正說明：<b>對領養率的貢獻，和功能的精緻度無關，只和它踩不踩在流失點上有關。</b>
-  </div>
+  <p class="note" style="margin-top:22px"><b>總覽：</b>前四名從 v1 的單一排序變成兩對並列——<b>需求端雙引擎</b>（測驗開門、敘事定情）與<b>橋接層雙基建</b>（草稿橋接雙方、回報留住中途）。v1 最大的系統性偏差是把「認養人體驗」當成領養率的全部；實際上放行速度掌握在中途手裡，而中途採用平台的理由在 v1 全被排到後段。</p>
 </div></section>
 
 <!-- ============ 6 ============ -->
 <section id="s6"><div class="wrap">
   <p class="kicker">Part 6 · 收斂</p>
-  <h2><span class="n">06</span>結論與優先改進清單</h2>
-  <p class="sub">測試證明網站的骨架正確：它把中途訪談的兩個核心痛點（被審查感、退養）當成硬規格在解。但三位 persona 各撞到一個小卡點，且都集中在「送出意向」那一刻——轉換漏斗的最後一格。</p>
+  <h2><span class="n">06</span>結論與新一輪改進清單</h2>
+  <p class="sub">v1 的 P0／P1／P2 五項已於 2026-07-09 全部落地並實測（草稿除罪化、隱私說明、試相處前移、退回入口前移、相簿導流＋轉介雙向回饋）。以下是 v2 重跑後的<b>新一輪</b>清單。</p>
 
-  <p class="sub" style="background:#EDF3EC;border-radius:12px;padding:12px 16px"><b>✅ 實作狀態（2026-07-09 更新）：</b>下表五項改進已全部落地到網站（index.html 與離線版），並以 Chromium 實測完整流程通過。</p>
-
-  <div class="tablewrap" role="region" aria-label="改進清單">
+  <div class="tablewrap" role="region" aria-label="v2 改進清單">
     <table>
-      <caption>表 2．依「對領養率的邊際效益」排序的改進清單</caption>
-      <thead>
-        <tr><th>優先</th><th>改進點</th><th>問題（來自走查）</th><th>建議修法</th><th>影響 persona</th></tr>
-      </thead>
+      <caption>表 1．v2 改進清單（依「對領養率的邊際效益 ÷ 成本」排序）</caption>
+      <thead><tr><th>優先</th><th>建議</th><th>依據</th><th>成本</th></tr></thead>
       <tbody>
-        <tr>
-          <td class="who">P0</td>
-          <td><b>A · 草稿頁除罪化</b></td>
-          <td>P1 送出前自我懷疑「會不會被打槍」</td>
-          <td>草稿上方加一句：「中途看的是你願不願意學，不是你懂多少。」（呼應受訪者 D「人都有菜的時候」）</td>
-          <td>新手（大宗）</td>
-        </tr>
-        <tr>
-          <td class="who">P0</td>
-          <td><b>C · 送出隱私說明</b></td>
-          <td>P3 怕摘要被留底而遲疑</td>
-          <td>草稿旁標注：「這段摘要只寄給這位中途，不會公開、不進相簿。」</td>
-          <td>隱私敏感者</td>
-        </tr>
-        <tr>
-          <td class="who">P1</td>
-          <td><b>B · 前移「試相處」</b></td>
-          <td>P2 退養陰影在旅程頁才被安撫，太晚</td>
-          <td>配對結果頁的 CTA 旁加一行：「先見面、可試相處，不用一次決定。」</td>
-          <td>有退養經驗者</td>
-        </tr>
-        <tr>
-          <td class="who">P2</td>
-          <td>無責退回入口前移</td>
-          <td>退路是承諾的定心丸，但埋在支援區</td>
-          <td>在承諾決策點（聊聊／旅程末）補一個輕量入口</td>
-          <td>全體</td>
-        </tr>
-        <tr>
-          <td class="who">P2</td>
-          <td>相簿 → 可認養同型貓</td>
-          <td>社會證明未導流到轉換</td>
-          <td>近況卡點入可跳到「和牠同型、現在可認養」的貓</td>
-          <td>瀏覽型</td>
-        </tr>
+        <tr><td class="who">P0</td><td><b>貓卡加可掃描事實列</b>：地區＋親貓／親狗／親幼兒章</td><td>走查卡點 1、2；B 的發文格式證詞（洞察 3）</td><td>低：資料加三欄＋卡片一行 chips</td></tr>
+        <tr><td class="who">P1</td><td><b>雙貓成家</b>：「我們是一起的」標記＋測驗加「一隻或兩隻」題＋社會化論述轉賣點</td><td>走查卡點 3；A/B 的不拆送實務</td><td>中</td></tr>
+        <tr><td class="who">P1</td><td><b>回報提醒隨時間衰減</b>：首 3 月照常→季報→年度近況卡，文案從「近況」轉「紀念日」</td><td>走查卡點 4；C 的衰減觀察（洞察 5）</td><td>低</td></tr>
+        <tr><td class="who">P2</td><td><b>校友迴路</b>：相簿卡可標「這是我第 N 隻」＋老認養人「帶朋友來認識」入口</td><td>洞察 10；A 的 1→6 隻與互相推薦</td><td>中</td></tr>
+        <tr><td class="who">P2</td><td><b>列表篩選器</b>（地區／親善／年齡）——60 隻規模的前置準備</td><td>走查卡點 5；C 的 60 隻容量</td><td>中</td></tr>
       </tbody>
     </table>
   </div>
 
-  <h3>一句話總結</h3>
-  <p>訪談告訴我們，領養率不是被「貓不夠多」卡住，而是被<b>「人不敢開始」與「貓被退回來」</b>兩件事夾住。合拍 PawMatch 的高分功能，恰好全部長在這兩個閥門上；而它現在最該補的，不是再加大功能，而是把三個發生在「送出那一刻」的微小猶豫——<b>怕被打槍、怕留底、怕重蹈覆轍</b>——用三句文案接住。這三句話，比再做一個新頁面更能提高領養率。</p>
+  <div class="grid g2" style="margin-top:22px">
+    <div class="card tint">
+      <h4>🚫 不要做（反建議）</h4>
+      <ul class="clean" style="margin-bottom:0">
+        <li><b>公開黑名單。</b>B 親歷：發黑名單被圍剿、被威脅提告，律師建議停發。平台集中化黑名單將繼承全部誹謗風險。維持「不合適→系統轉介」的正向出口即可。</li>
+        <li><b>把測驗變成審核。</b>C 的歸因式評估只可能發生在 1.5 小時的真人對話裡。測驗的本分是自我揭露與配對，審核留給中途——這條界線是 A 型中途願意進場的前提。</li>
+      </ul>
+    </div>
+    <div class="card tint">
+      <h4>📣 GTM 註記（影響領養率上限）</h4>
+      <p style="font-size:14.5px;margin:0 0 8px">B 證實 FB 對外部連結的觸及懲罰（「連結超過兩個，觸及幾乎歸零」），C 證實社群仍是最有效擴散。</p>
+      <p style="font-size:14.5px;margin:0">平台需要「FB 原生分享資產」：無連結的圖卡（貓故事＋QR code）與純文字模板，讓中途貼進社團時不觸發演算法懲罰。</p>
+    </div>
+  </div>
 
-  <div class="note">
-    <b>方法備註：</b>本報告的行為與心理推論，全部可回溯到四份逐字稿（關鍵詞頻次：回報 24、兩隻 30、審核 20、問卷 16、合約 15、房東 10 次）。Persona 為訪談洞察的具象化，非真實個資；情緒標記為模擬走查的定性判斷，用於定位卡點、非量化實驗數據。實地驗證建議招募 5–8 位真實新手認養人做 moderated test，重點觀測「送出意向」那一格的放棄率。
+  <div class="card" style="margin-top:22px">
+    <h4>🧪 真人驗證建議（模擬走查測不到的）</h4>
+    <p style="font-size:14.5px;margin:8px 0 0">招募 5–8 位真實新手認養人做 moderated test：① 草稿頁的實際放棄率與停留時間　② P4 型受測者在貓卡列表的掃描路徑（出聲思考）　③「先見面、可試相處」文案是否真的改變點擊率（可 A/B）。</p>
+  </div>
+
+  <div class="quote" style="margin-top:26px">
+    <b>一句話總結：</b>v1 說對了方向（鬆開前端審查感、守住後端不退養），但把領養率當成純需求端問題。v2 的修正是——<em>領養率＝認養人敢開始 × 中途願放行 × 貓留得下來</em>。網站已把第一項做到位；下一輪的分數在第二、三項：讓資訊完整到 P4 不流失、讓後台好用到 A 型中途願意進場、讓最難送的雙貓與玳瑁被個性而非照片選中。
   </div>
 </div></section>
 
 <div class="wrap foot">
-  合拍 PawMatch 易用性測試報告　·　資料來源：4 場中途之家訪談逐字稿　·　受測：合拍 PawMatch MVP　·　本頁為研究示意，貓咪與帳本均為假資料。
+  合拍 PawMatch 易用性測試報告 v2（Fable 5 重跑版）　·　資料來源：3 位中途受訪者、4 份逐字稿（已勘誤去重）　·　受測：合拍 PawMatch MVP　·　走查於 2026-07-09 在實際網站（Chromium）完成　·　本頁為研究示意，貓咪與帳本均為假資料。
 </div>
 
 </body>
