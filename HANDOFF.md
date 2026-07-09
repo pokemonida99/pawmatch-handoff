@@ -62,14 +62,12 @@ pawmatch-handoff/
 ## 3. 在另一台電腦怎麼接續
 
 ### 方式 A：從 GitHub 接續（推薦，保留 git 歷史）
-專案已推送到分支，直接 clone 下來即可：
+本專案已是獨立 repo（2026-07-09 建立，私人）：
 ```bash
-git clone <你的 repo URL> CogVideo
-cd CogVideo
-git checkout claude/cat-adoption-prompt-suite-zzaho0
-cd cat-adoption-site
+git clone https://github.com/pokemonida99/pawmatch-handoff.git
+cd pawmatch-handoff/cat-adoption-site
 ```
-> 本次工作全部在 `claude/cat-adoption-prompt-suite-zzaho0` 分支，尚未合併到 main、尚未開 PR。
+> 舊的 CogVideo repo 分支 `claude/cat-adoption-prompt-suite-zzaho0` 是第一階段的工作紀錄，內容已全部帶到本 repo，可忽略。
 
 ### 方式 B：直接用這個 ZIP（無 git）
 解壓縮後，`cat-adoption-site/` 就是完整網站，不需安裝任何東西。
